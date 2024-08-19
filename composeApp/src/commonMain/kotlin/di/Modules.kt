@@ -1,0 +1,36 @@
+package di
+
+import data.MyRepository
+import data.MyRepositoryImpl
+import data.local.ExampleLocalRepository
+import data.local.ExampleLocalRepositoryImpl
+import data.remote.ExampleHttpRepository
+import data.remote.ExampleHttpRepositoryImpl
+import dataStore.remote.ExampleHttpDataSource
+import domain.ExampleOperationUseCase
+import org.koin.compose.viewmodel.dsl.viewModelOf
+import org.koin.core.module.Module
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
+import org.koin.dsl.module
+import presentation.MyViewModel
+import presentation.PermissionViewModel
+
+expect val platformModule: Module
+
+val sharedModule = module {
+//    single {
+//        MyRepositoryImpl(get())
+//    }.bind<MyRepository>()
+    // DataStore
+    singleOf(::ExampleHttpDataSource)
+    // Data
+    singleOf(::MyRepositoryImpl).bind<MyRepository>()
+    single { ExampleHttpRepositoryImpl(get())}.bind<ExampleHttpRepository>()
+    single { ExampleLocalRepositoryImpl(get())}.bind<ExampleLocalRepository>()
+    // Domain
+    single { ExampleOperationUseCase(get(), get()) }
+    // Presentation
+    viewModelOf(::MyViewModel)
+    viewModelOf(::PermissionViewModel)
+}
