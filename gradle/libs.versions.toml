@@ -27,6 +27,8 @@ datastore = "1.1.1"
 
 moko = "0.18.0"
 
+datetime = "0.6.0"
+
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -63,6 +65,8 @@ core-splashscreen = { group = "androidx.core", name = "core-splashscreen", versi
 
 moko-permissions = { module = "dev.icerock.moko:permissions", version.ref = "moko" }
 moko-permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "moko" }
+
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
