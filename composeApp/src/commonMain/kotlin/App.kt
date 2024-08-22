@@ -24,6 +24,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import presentation.MyViewModel
 import presentation.PermissionViewModel
+import presentation.RequirePermissionScreen
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
@@ -31,11 +32,7 @@ import presentation.PermissionViewModel
 fun App() {
     MaterialTheme {
         KoinContext {
-            val factory = rememberPermissionsControllerFactory()
-            val controller = remember(factory) {
-                factory.createPermissionsController()
-            }
-            BindEffect(controller)
+            val controller = bindEffect()
             NavHost(
                 navController = rememberNavController(),
                 startDestination = "home"
@@ -85,39 +82,12 @@ fun App() {
     }
 }
 
-@OptIn(KoinExperimentalAPI::class)
 @Composable
-fun RequirePermissionScreen(modifier: Modifier = Modifier, controller: PermissionsController) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val viewModel = koinViewModel<PermissionViewModel>()
-        val state = viewModel.state
-        when (state) {
-            PermissionState.Granted -> {
-                Text("Record audio permission granted!")
-            }
-
-            PermissionState.DeniedAlways -> {
-                Text("Permission was permanently declined.")
-                Button(onClick = {
-                    viewModel.openSettings(controller)
-                }) {
-                    Text("Open app settings")
-                }
-            }
-
-            else -> {
-                Button(
-                    onClick = {
-                        viewModel.provideOrRequestRecordAudioPermission(controller)
-                    }
-                ) {
-                    Text("Request permission")
-                }
-            }
-        }
+private fun bindEffect(): PermissionsController {
+    val factory = rememberPermissionsControllerFactory()
+    val controller = remember(factory) {
+        factory.createPermissionsController()
     }
+    BindEffect(controller)
+    return controller
 }

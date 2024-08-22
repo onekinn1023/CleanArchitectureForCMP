@@ -8,6 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
+import com.arkivanov.decompose.retainedComponent
+import decompose.AppRootComponent
+import decompose.DecomposeMaterialApp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -24,8 +27,12 @@ class MainActivity : ComponentActivity() {
                 isChecking
             }
         }
+        val rootComponent = retainedComponent {
+            AppRootComponent(it)
+        }
         setContent {
             App()
+//            DecomposeMaterialApp(rootComponent = rootComponent)
         }
     }
 }
