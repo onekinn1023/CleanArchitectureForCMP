@@ -11,8 +11,13 @@ import androidx.lifecycle.lifecycleScope
 import com.arkivanov.decompose.retainedComponent
 import decompose.AppRootComponent
 import decompose.DecomposeMaterialApp
+import decompose.RootComponent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.getKoin
+import org.koin.android.ext.android.inject
+import org.koin.compose.koinInject
+import org.koin.core.Koin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,12 +32,13 @@ class MainActivity : ComponentActivity() {
                 isChecking
             }
         }
+        val rootComponentFactory by inject<RootComponent.Factory>()
         val rootComponent = retainedComponent {
-            AppRootComponent(it)
+            rootComponentFactory(it)
         }
         setContent {
-            App()
-//            DecomposeMaterialApp(rootComponent = rootComponent)
+//            App()
+            DecomposeMaterialApp(rootComponent = rootComponent)
         }
     }
 }

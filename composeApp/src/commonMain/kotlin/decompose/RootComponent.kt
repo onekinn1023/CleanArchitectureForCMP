@@ -18,13 +18,19 @@ interface RootComponent {
     fun onBackClicked(index: Int)
 
     sealed class Child {
-        data class ScreenA(val screenAComponent: ScreenAComponent) : Child()
         data class ScreenB(val screenBComponent: ScreenBComponent) : Child()
+        data class MyScreen(val myScreenComponent: MyScreenComponent) : Child()
+    }
+
+    fun interface Factory {
+        operator fun invoke(componentContext: ComponentContext): RootComponent
     }
 }
 
 class AppRootComponent(
-    componentContext: ComponentContext
+    componentContext: ComponentContext,
+    private val myScreenComponentFactory: MyScreenComponent.Factory,
+    private val screenBComponentFactory: ScreenBComponent.Factory
 ) : RootComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Configuration>()
@@ -32,39 +38,31 @@ class AppRootComponent(
     override val stack: Value<ChildStack<*, RootComponent.Child>> = childStack(
         source = navigation,
         serializer = Configuration.serializer(),
-        initialConfiguration = Configuration.ScreenA,
+        initialConfiguration = Configuration.MyScreen,
         handleBackButton = true,
         childFactory = ::createChild
-        )
+    )
 
     private fun createChild(
         configuration: Configuration,
         componentContext: ComponentContext
     ): RootComponent.Child {
         return when (configuration) {
-            Configuration.ScreenA -> {
-                RootComponent.Child.ScreenA(
-                    DefaultScreenAComponent(
+            Configuration.MyScreen -> {
+                RootComponent.Child.MyScreen(
+                    myScreenComponentFactory(
                         componentContext = componentContext,
-                        navigateToScreenB = {
-                            navigation.push(
-                                Configuration.ScreenB(
-                                    it
-                                )
-                            )
-                        }
+                        navigateClick = { navigation.push(Configuration.ScreenB(it)) }
                     )
                 )
             }
 
             is Configuration.ScreenB -> {
                 RootComponent.Child.ScreenB(
-                    DefaultScreenBComponent(
+                    screenBComponentFactory(
                         componentContext = componentContext,
                         title = configuration.title,
-                        onBackPressed = {
-                            navigation.pop()
-                        }
+                        backPressed = { navigation.pop() }
                     )
                 )
             }
@@ -75,14 +73,27 @@ class AppRootComponent(
         navigation.popTo(index)
     }
 
+    class Factory(
+        private val myScreenComponentFactory: MyScreenComponent.Factory,
+        private val screenBComponentFactory: ScreenBComponent.Factory
+    ) : RootComponent.Factory {
+        override fun invoke(componentContext: ComponentContext): RootComponent {
+            return AppRootComponent(
+                componentContext,
+                myScreenComponentFactory,
+                screenBComponentFactory
+            )
+        }
+    }
+
 
     @Serializable
     private sealed interface Configuration {
 
         @Serializable
-        data object ScreenA : Configuration
+        data class ScreenB(val title: String) : Configuration
 
         @Serializable
-        data class ScreenB(val title: String) : Configuration
+        data object MyScreen : Configuration
     }
 }

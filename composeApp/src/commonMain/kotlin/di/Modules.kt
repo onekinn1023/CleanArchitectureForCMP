@@ -7,6 +7,12 @@ import data.local.ExampleLocalRepositoryImpl
 import data.remote.ExampleHttpRepository
 import data.remote.ExampleHttpRepositoryImpl
 import dataStore.remote.ExampleHttpDataSource
+import decompose.AppRootComponent
+import decompose.DefaultMyScreenComponent
+import decompose.DefaultScreenBComponent
+import decompose.MyScreenComponent
+import decompose.RootComponent
+import decompose.ScreenBComponent
 import domain.ExampleOperationUseCase
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
@@ -33,4 +39,20 @@ val sharedModule = module {
     // Presentation
     viewModelOf(::MyViewModel)
     viewModelOf(::PermissionViewModel)
+}
+
+val componentsModule = module {
+    single<ScreenBComponent.Factory> {
+        DefaultScreenBComponent.Factory()
+    }
+    single<MyScreenComponent.Factory> {
+        DefaultMyScreenComponent.Factory()
+    }
+
+    single<RootComponent.Factory> {
+        AppRootComponent.Factory(
+            myScreenComponentFactory = get(),
+            screenBComponentFactory = get()
+        )
+    }
 }

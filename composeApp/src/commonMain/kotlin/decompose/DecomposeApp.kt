@@ -10,6 +10,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import org.koin.compose.KoinContext
 import org.koin.dsl.koinApplication
+import presentation.MyScreen
 
 @Composable
 fun DecomposeMaterialApp(rootComponent: RootComponent) {
@@ -21,9 +22,13 @@ fun DecomposeMaterialApp(rootComponent: RootComponent) {
                 modifier = Modifier,
                 animation = stackAnimation(fade())
             ) {
-                when(val child = it.instance) {
-                    is RootComponent.Child.ScreenA -> {
-                        ScreenA(modifier = Modifier, screenAComponent = child.screenAComponent)
+                when (val child = it.instance) {
+                    is RootComponent.Child.MyScreen -> {
+                        MyScreen(
+                            modifier = Modifier,
+                            myScreenComponent = child.myScreenComponent,
+                            isDecomposeTheme = true
+                        )
                     }
 
                     is RootComponent.Child.ScreenB -> {
