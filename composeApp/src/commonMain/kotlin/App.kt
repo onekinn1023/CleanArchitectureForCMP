@@ -22,8 +22,10 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
+import presentation.MyScreen
 import presentation.MyViewModel
 import presentation.PermissionViewModel
+import presentation.RequirePermissionScreen
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
@@ -31,51 +33,13 @@ import presentation.PermissionViewModel
 fun App() {
     MaterialTheme {
         KoinContext {
-            val factory = rememberPermissionsControllerFactory()
-            val controller = remember(factory) {
-                factory.createPermissionsController()
-            }
-            BindEffect(controller)
+            val controller = bindEffect()
             NavHost(
                 navController = rememberNavController(),
                 startDestination = "home"
             ) {
                 composable("home") {
-                    val viewModel = koinViewModel<MyViewModel>()
-                    val state by viewModel.state.collectAsState()
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(text = viewModel.getHelloWorld())
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Button(
-                            onClick = {
-                                viewModel.getTextString()
-                            }
-                        ) {
-                            Text(text = "Request the test api")
-                        }
-                        Text(text = state.exampleNetText)
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Button(
-                            onClick = {
-                                viewModel.getLocalTextString()
-                            }
-                        ) {
-                            Text(text = "Request local text")
-                        }
-                        Text(text = state.exampleLocalText)
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Button(
-                            onClick = {
-                                viewModel.changeText()
-                            }
-                        ) {
-                            Text(text = "Change local text")
-                        }
-                    }
+                   MyScreen(modifier = Modifier)
                 }
                 composable("permission") {
                     RequirePermissionScreen(modifier = Modifier, controller = controller)
@@ -85,39 +49,12 @@ fun App() {
     }
 }
 
-@OptIn(KoinExperimentalAPI::class)
 @Composable
-fun RequirePermissionScreen(modifier: Modifier = Modifier, controller: PermissionsController) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val viewModel = koinViewModel<PermissionViewModel>()
-        val state = viewModel.state
-        when (state) {
-            PermissionState.Granted -> {
-                Text("Record audio permission granted!")
-            }
-
-            PermissionState.DeniedAlways -> {
-                Text("Permission was permanently declined.")
-                Button(onClick = {
-                    viewModel.openSettings(controller)
-                }) {
-                    Text("Open app settings")
-                }
-            }
-
-            else -> {
-                Button(
-                    onClick = {
-                        viewModel.provideOrRequestRecordAudioPermission(controller)
-                    }
-                ) {
-                    Text("Request permission")
-                }
-            }
-        }
+private fun bindEffect(): PermissionsController {
+    val factory = rememberPermissionsControllerFactory()
+    val controller = remember(factory) {
+        factory.createPermissionsController()
     }
+    BindEffect(controller)
+    return controller
 }

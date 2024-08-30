@@ -63,6 +63,8 @@ kotlin {
             api(libs.moko.permissions)
             api(libs.moko.permissions.compose)
             implementation(libs.kotlinx.datetime)
+
+            implementation(libs.bundles.decompose)
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)
