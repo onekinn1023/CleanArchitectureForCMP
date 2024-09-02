@@ -21,19 +21,18 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import presentation.MyViewModel
 import presentation.PermissionViewModel
+import provider.DefaultDispatcher
+import provider.DispatcherProvider
 
 expect val platformModule: Module
 
 val sharedModule = module {
-//    single {
-//        MyRepositoryImpl(get())
-//    }.bind<MyRepository>()
-    // DataStore
     singleOf(::ExampleHttpDataSource)
     // Data
+    single { ExampleHttpDataSource(get(), get()) }
     singleOf(::MyRepositoryImpl).bind<MyRepository>()
-    single { ExampleHttpRepositoryImpl(get())}.bind<ExampleHttpRepository>()
-    single { ExampleLocalRepositoryImpl(get())}.bind<ExampleLocalRepository>()
+    single { ExampleHttpRepositoryImpl(get()) }.bind<ExampleHttpRepository>()
+    single { ExampleLocalRepositoryImpl(get(), get()) }.bind<ExampleLocalRepository>()
     // Domain
     single { ExampleOperationUseCase(get(), get()) }
     // Presentation
@@ -54,5 +53,11 @@ val componentsModule = module {
             myScreenComponentFactory = get(),
             screenBComponentFactory = get()
         )
+    }
+}
+
+val providerModule = module {
+    single<DispatcherProvider.Factory> {
+        DefaultDispatcher.Factory()
     }
 }

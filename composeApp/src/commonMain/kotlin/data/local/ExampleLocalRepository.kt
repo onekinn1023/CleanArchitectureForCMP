@@ -4,13 +4,15 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import provider.DispatcherProvider
+import provider.SchedulePort
 import dataStore.local.DataStoreFactory
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import utils.LocalError
 import utils.Result
-import utils.scheduleCatchingLocalWork
 
 interface ExampleLocalRepository {
 
@@ -22,8 +24,12 @@ interface ExampleLocalRepository {
 }
 
 class ExampleLocalRepositoryImpl(
-    val dataStore: DataStoreFactory
-): ExampleLocalRepository {
+    val dataStore: DataStoreFactory,
+    private val dispatcherProvider: DispatcherProvider.Factory
+): ExampleLocalRepository, SchedulePort() {
+
+    override val scheduler: CoroutineDispatcher
+        get() = dispatcherProvider().io
 
     private val db : DataStore<Preferences> by lazy {
         dataStore.createExampleDataStore()

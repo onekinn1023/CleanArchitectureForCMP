@@ -1,17 +1,23 @@
 package dataStore.remote
 
+import provider.DispatcherProvider
+import provider.SchedulePort
 import data.remote.CensoredText
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import kotlinx.coroutines.CoroutineDispatcher
 import utils.NetworkError
 import utils.Result
 import utils.map
-import utils.scheduleCatchingNetwork
 
 class ExampleHttpDataSource(
-    private val httpClient: HttpClient
-) {
+    private val httpClient: HttpClient,
+    private val dispatcherProvider: DispatcherProvider.Factory
+): SchedulePort() {
+
+    override val scheduler: CoroutineDispatcher
+        get() = dispatcherProvider().default
 
     suspend fun censorWords(uncensored: String) : Result<String, NetworkError> {
         return scheduleCatchingNetwork<CensoredText> {
