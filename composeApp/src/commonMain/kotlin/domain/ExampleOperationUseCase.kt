@@ -2,6 +2,7 @@ package domain
 
 import data.local.ExampleLocalRepository
 import data.remote.ExampleHttpRepository
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 import utils.getOrThrow
 import utils.onError
@@ -15,26 +16,44 @@ class ExampleOperationUseCase(
     val exampleUseCaseFlow: Flow<String> = exampleLocalRepository.exampleTextFlow
 
     suspend fun getExampleProcessText(): String {
-       return exampleHttpRepository.getExampleText().onSuccess {
-            println("getExampleProcessText: successfully with $it")
+        return exampleHttpRepository.getExampleText().onSuccess {
+            Napier.d(
+                tag = "ExampleOperationUseCase",
+                message = "getExampleProcessText: successfully with $it"
+            )
         }.onError {
-            println("getExampleProcessText: failed with $it")
+            Napier.e(
+                tag = "ExampleOperationUseCase",
+                message = "getExampleProcessText: failed with $it"
+            )
         }.getOrThrow()
     }
 
     suspend fun getExampleLocalText(): String {
         return exampleLocalRepository.getLocalData().onSuccess {
-            println("getExampleLocalText: successfully with $it")
+            Napier.d(
+                tag = "ExampleOperationUseCase",
+                message = "getExampleLocalText: successfully with $it"
+            )
         }.onError {
-            println("getExampleLocalText: failed with $it")
+            Napier.e(
+                tag = "ExampleOperationUseCase",
+                message = "getExampleLocalText: failed with $it"
+            )
         }.getOrThrow()
     }
 
-    suspend fun changeText(){
+    suspend fun changeText() {
         return exampleLocalRepository.changeTheLocalData().onSuccess {
-            println("changeText: successfully with $it")
+            Napier.d(
+                tag = "ExampleOperationUseCase",
+                message = "changeText: successfully with $it"
+            )
         }.onError {
-            println("changeText: failed with $it")
+            Napier.e(
+                tag = "ExampleOperationUseCase",
+                message = "changeText: failed with $it"
+            )
         }.getOrThrow()
     }
 }

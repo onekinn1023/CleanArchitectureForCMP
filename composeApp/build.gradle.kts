@@ -65,6 +65,7 @@ kotlin {
             implementation(libs.kotlinx.datetime)
 
             implementation(libs.bundles.decompose)
+            implementation(libs.cmp.napier)
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -94,7 +95,13 @@ android {
     }
     buildTypes {
         getByName("release") {
+            isMinifyEnabled = true
+        }
+        getByName("debug") {
+            isDebuggable = true
             isMinifyEnabled = false
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-DEBUG"
         }
     }
     compileOptions {

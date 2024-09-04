@@ -1,5 +1,6 @@
 package provider
 
+import io.github.aakira.napier.Napier
 import io.ktor.client.call.body
 import io.ktor.client.statement.HttpResponse
 import io.ktor.util.network.UnresolvedAddressException
@@ -23,7 +24,10 @@ abstract class SchedulePort {
                 Result.Success(block())
             } catch (e: Exception) {
                 coroutineContext.ensureActive()
-                println("Failed to scheduleCatchingLocalWork due to $e")
+                Napier.e(
+                    tag = "SchedulePort",
+                    message = "Failed to scheduleCatchingLocalWork due to $e"
+                )
                 Result.Error(LocalError.UNKNOWN_ERROR)
             }
         }
@@ -48,7 +52,10 @@ abstract class SchedulePort {
                     else -> Result.Error(NetworkError.UNKNOWN)
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
+                Napier.e(
+                    tag = "SchedulePort",
+                    message = "Failed to scheduleCatchingNetwork due to $e"
+                )
                 coroutineContext.ensureActive()
                 when (e) {
                     is UnresolvedAddressException -> Result.Error(NetworkError.NO_INTERNET)

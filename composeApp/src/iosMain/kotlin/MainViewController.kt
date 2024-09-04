@@ -13,12 +13,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import platform.Foundation.NSFileManager
 
-fun MainViewController() = ComposeUIViewController(
-    configure = {
-        initKoin()
-    }
-) {
-
+fun MainViewController() = ComposeUIViewController {
 //    App()
     val root = remember {
         ManualKoinClass.rootComponentFactory(DefaultComponentContext(LifecycleRegistry()))

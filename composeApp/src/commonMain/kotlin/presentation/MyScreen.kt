@@ -19,7 +19,9 @@ import androidx.compose.ui.unit.dp
 import decompose.MyScreenComponent
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
+import utils.ObserveAsEvent
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun MyScreen(
     modifier: Modifier = Modifier,
@@ -28,16 +30,29 @@ fun MyScreen(
 ) {
     val viewModel = koinViewModel<MyViewModel>()
     val state by viewModel.state.collectAsState()
+    ObserveAsEvent(viewModel.effect) {
+        when (it) {
+            MyEffect.Effect1 -> {
+                println("Effect 1")
+            }
+
+            MyEffect.NavigateToB -> {
+                myScreenComponent?.onAction(
+                    MyScreenComponent.MyScreenAction.NavigateToNext(
+                        state.exampleLocalText
+                    )
+                )
+            }
+        }
+    }
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = viewModel.getHelloWorld())
-        Spacer(modifier = Modifier.height(10.dp))
         Button(
             onClick = {
-                viewModel.getTextString()
+                viewModel.onEvent(MyEvent.GetRemoteString)
             }
         ) {
             Text(text = "Request the test api")
@@ -46,7 +61,7 @@ fun MyScreen(
         Spacer(modifier = Modifier.height(10.dp))
         Button(
             onClick = {
-                viewModel.getLocalTextString()
+                viewModel.onEvent(MyEvent.GetLocalString)
             }
         ) {
             Text(text = "Request local text")
@@ -55,7 +70,7 @@ fun MyScreen(
         Spacer(modifier = Modifier.height(10.dp))
         Button(
             onClick = {
-                viewModel.changeText()
+                viewModel.onEvent(MyEvent.ChangeText)
             }
         ) {
             Text(text = "Change local text")
@@ -64,11 +79,7 @@ fun MyScreen(
             Spacer(modifier = Modifier.height(10.dp))
             Button(
                 onClick = {
-                    myScreenComponent?.onAction(
-                        MyScreenComponent.MyScreenAction.NavigateToNext(
-                            state.exampleLocalText
-                        )
-                    )
+                    viewModel.onEvent(MyEvent.ClickNavigateButton)
                 }
             ) {
                 Text(text = "Navigate to next screen B!")

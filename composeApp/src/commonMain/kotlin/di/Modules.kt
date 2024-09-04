@@ -24,7 +24,7 @@ import presentation.PermissionViewModel
 import provider.DefaultDispatcher
 import provider.DispatcherProvider
 
-expect val platformModule: Module
+expect fun platformModule(logEnabled: Boolean): Module
 
 val sharedModule = module {
     singleOf(::ExampleHttpDataSource)
