@@ -3,6 +3,7 @@ package dataStore.remote
 import provider.DispatcherProvider
 import provider.SchedulePort
 import data.remote.CensoredText
+import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter

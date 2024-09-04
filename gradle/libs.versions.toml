@@ -31,6 +31,8 @@ datetime = "0.6.0"
 
 decompose = "3.1.0"
 
+napier = "2.7.1"
+
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -72,6 +74,8 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-extensions-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose" }
+
+cmp-napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
