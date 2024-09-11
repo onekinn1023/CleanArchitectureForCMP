@@ -1,4 +1,4 @@
-package domain
+package example.domain
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime

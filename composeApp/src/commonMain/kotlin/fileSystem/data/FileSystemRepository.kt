@@ -1,24 +1,34 @@
-package fileSystem
+package fileSystem.data
 
+import dataStore.local.FileReader
+import fileSystem.domain.ProgressUpdate
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.onUpload
-import io.ktor.client.request.forms.append
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
-import io.ktor.http.ifNoneMatch
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.withContext
 import provider.DispatcherProvider
+import provider.SchedulePort
 
-class FileRepository(
+interface FileSystemRepository {
+
+    fun uploadFile(contentUri: String): Flow<ProgressUpdate>
+}
+
+class FileSystemRepositoryImpl(
     private val httpClient: HttpClient,
     private val fileReader: FileReader,
-) {
-    fun uploadFile(contentUri: String): Flow<ProgressUpdate> = channelFlow {
+    private val dispatcherProvider: DispatcherProvider.Factory
+): SchedulePort(), FileSystemRepository {
+
+    override val scheduler: CoroutineDispatcher
+        get() = dispatcherProvider().default
+
+    override fun uploadFile(contentUri: String): Flow<ProgressUpdate> = channelFlow {
         val info = fileReader.uriToFileInfo(contentUri)
         httpClient.submitFormWithBinaryData(
             url = "https://dlptest.com/https-post",
@@ -42,8 +52,3 @@ class FileRepository(
         }
     }
 }
-
-data class ProgressUpdate(
-    val byteSent: Long,
-    val totalBytes: Long
-)

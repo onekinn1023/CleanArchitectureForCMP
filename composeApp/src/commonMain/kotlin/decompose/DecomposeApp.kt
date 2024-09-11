@@ -9,7 +9,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import org.koin.compose.KoinContext
-import presentation.MyScreen
+import example.presentation.MyScreen
 
 @Composable
 fun DecomposeMaterialApp(rootComponent: RootComponent) {

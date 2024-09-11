@@ -1,7 +1,7 @@
-package domain
+package example.domain
 
-import data.local.ExampleLocalRepository
-import data.remote.ExampleHttpRepository
+import example.data.local.ExampleLocalRepository
+import example.data.remote.ExampleHttpRepository
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 import utils.getOrThrow

@@ -1,10 +1,12 @@
-package fileSystem
+package fileSystem.presentation
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import fileSystem.domain.UploadFileUseCase
+import io.github.aakira.napier.Napier
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -13,10 +15,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import okio.FileNotFoundException
 
 class FileSystemViewModel(
-    private val fileRepository: FileRepository
+    private val uploadFileUseCase: UploadFileUseCase
 ) : ViewModel() {
 
     var uploadState by mutableStateOf(UploadState())
@@ -24,8 +27,15 @@ class FileSystemViewModel(
 
     private var uploadJob: Job? = null
 
-    fun uploadFile(contentUri: String) {
-        uploadJob = fileRepository
+    fun onEvent(event: FileOperationEvent) {
+        when (event) {
+            FileOperationEvent.CancelUpload -> cancelUploadJob()
+            is FileOperationEvent.UploadFile -> uploadFile(event.contentUri)
+        }
+    }
+
+    private fun uploadFile(contentUri: String) {
+        uploadJob = uploadFileUseCase
             .uploadFile(contentUri)
             .onStart {
                 uploadState = uploadState.copy(
@@ -47,25 +57,28 @@ class FileSystemViewModel(
                     uploadState = uploadState.copy(
                         isUploading = false,
                         isUploadComplete = true,
-                        errorMessage = "The upload job is cancelled!"
+                        errorMessage = "The upload job is cancelled!",
+                        progress = 0f
                     )
                 }
             }
             .catch { cause ->
-                val message = when(cause) {
+                Napier.e("Failed to upload fileSystem due to $cause")
+                val message = when (cause) {
                     is FileNotFoundException -> "File not found!"
                     is UnresolvedAddressException -> "No internet!"
                     else -> "Something went wrong"
                 }
-
+                uploadState = uploadState.copy(
+                    isUploading = false,
+                    isUploadComplete = true,
+                    errorMessage = message
+                )
             }
             .launchIn(viewModelScope)
     }
-}
 
-data class UploadState(
-    val isUploading: Boolean = false,
-    val isUploadComplete: Boolean = false,
-    val progress: Float = 0f,
-    val errorMessage: String? = null
-)
+    private fun cancelUploadJob() {
+        uploadJob?.cancel()
+    }
+}
