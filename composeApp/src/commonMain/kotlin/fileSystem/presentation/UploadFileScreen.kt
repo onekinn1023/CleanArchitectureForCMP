@@ -18,9 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import fileSystem.FileHelper
 import io.github.aakira.napier.Napier
-import org.koin.compose.koinInject
+import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import utils.ObserveAsEvent
@@ -30,10 +29,15 @@ import utils.ObserveAsEvent
 fun FileUploadScreen(modifier: Modifier = Modifier) {
     val viewModel = koinViewModel<FileSystemViewModel>()
     val state = viewModel.uploadState
+    val filePicker = rememberFilePickerLauncher { file ->
+        file?.let {
+            viewModel.onEvent(FileOperationEvent.UploadFile(it.path.orEmpty()))
+        }
+    }
     ObserveAsEvent(viewModel.effect) {
         when (it) {
             FileOperationEffect.SelectFile -> {
-                TODO()
+                filePicker.launch()
             }
         }
     }

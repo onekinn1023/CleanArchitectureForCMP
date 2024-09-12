@@ -62,6 +62,7 @@ kotlin {
             implementation(libs.bundles.decompose)
             implementation(libs.cmp.napier)
             implementation(libs.okio)
+            implementation(libs.bundles.file.kit)
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)

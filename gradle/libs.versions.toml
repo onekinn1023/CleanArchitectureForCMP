@@ -35,6 +35,8 @@ napier = "2.7.1"
 
 okio = "3.9.0"
 
+file-kit = "0.8.2"
+
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -84,6 +86,9 @@ cmp-napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 okio-test = { module = "com.squareup.okio:okio-fakefilesystem", version.ref = "okio" }
 
+file-kit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "file-kit"}
+file-kit-compoes = { module = "io.github.vinceglb:filekit-compose", version.ref = "file-kit" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -119,4 +124,8 @@ koin-common = [
 mock-permissions = [
     "moko-permissions",
     "moko-permissions-compose"
+]
+file-kit = [
+    "file-kit-core",
+    "file-kit-compoes"
 ]
