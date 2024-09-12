@@ -10,6 +10,9 @@ data class UploadState(
 sealed interface FileOperationEvent {
     data class UploadFile(val contentUri: String): FileOperationEvent
     data object CancelUpload: FileOperationEvent
+    data object SelectFile: FileOperationEvent
 }
 
-sealed class FileOperationEffect
+sealed class FileOperationEffect {
+    data object SelectFile: FileOperationEffect()
+}

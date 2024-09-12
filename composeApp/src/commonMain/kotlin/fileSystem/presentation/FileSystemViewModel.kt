@@ -10,11 +10,13 @@ import io.github.aakira.napier.Napier
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import okio.FileNotFoundException
 
@@ -25,12 +27,22 @@ class FileSystemViewModel(
     var uploadState by mutableStateOf(UploadState())
         private set
 
+    private val _effectChannel = Channel<FileOperationEffect>{}
+    val effect = _effectChannel.receiveAsFlow()
+
     private var uploadJob: Job? = null
 
     fun onEvent(event: FileOperationEvent) {
         when (event) {
             FileOperationEvent.CancelUpload -> cancelUploadJob()
             is FileOperationEvent.UploadFile -> uploadFile(event.contentUri)
+            FileOperationEvent.SelectFile -> selectFile()
+        }
+    }
+
+    private fun selectFile() {
+        viewModelScope.launch {
+            _effectChannel.send(FileOperationEffect.SelectFile)
         }
     }
 
