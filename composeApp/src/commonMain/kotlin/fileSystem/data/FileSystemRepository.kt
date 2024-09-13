@@ -17,20 +17,18 @@ import provider.SchedulePort
 
 interface FileSystemRepository {
 
-    fun uploadFile(contentUri: String): Flow<ProgressUpdate>
+    fun uploadFile(info: FileInfo): Flow<ProgressUpdate>
 }
 
 class FileSystemRepositoryImpl(
     private val httpClient: HttpClient,
-    private val fileReader: FileReader,
     private val dispatcherProvider: DispatcherProvider.Factory
 ): SchedulePort(), FileSystemRepository {
 
     override val scheduler: CoroutineDispatcher
         get() = dispatcherProvider().default
 
-    override fun uploadFile(contentUri: String): Flow<ProgressUpdate> = channelFlow {
-        val info = fileReader.uriToFileInfo(contentUri)
+    override fun uploadFile(info: FileInfo): Flow<ProgressUpdate> = channelFlow {
         httpClient.submitFormWithBinaryData(
             url = "https://dlptest.com/https-post",
             formData = formData {

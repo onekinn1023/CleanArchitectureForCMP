@@ -1,6 +1,7 @@
 package fileSystem.domain
 
 import androidx.lifecycle.viewModelScope
+import fileSystem.data.FileInfo
 import fileSystem.data.FileSystemRepository
 import io.github.aakira.napier.Napier
 import io.ktor.util.network.UnresolvedAddressException
@@ -19,14 +20,14 @@ class UploadFileUseCase(
     private val fileSystemRepository: FileSystemRepository
 ) {
 
-    operator fun invoke(contentUri: String): Flow<ProgressUpdate> {
-        if (contentUri.isBlank()) {
+    operator fun invoke(info: FileInfo): Flow<ProgressUpdate> {
+        if (info.bytes.isEmpty()) {
             Napier.e(
-                tag ="UploadFileUseCase",
+                tag = "UploadFileUseCase",
                 message = "Empty content is not allowed!"
             )
             return emptyFlow()
         }
-        return fileSystemRepository.uploadFile(contentUri)
+        return fileSystemRepository.uploadFile(info)
     }
 }
