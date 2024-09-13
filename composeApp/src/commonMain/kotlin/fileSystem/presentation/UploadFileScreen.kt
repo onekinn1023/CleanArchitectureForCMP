@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import decompose.UploadFileScreenComponent
 import io.github.aakira.napier.Napier
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import org.koin.compose.viewmodel.koinViewModel
@@ -26,12 +28,15 @@ import utils.ObserveAsEvent
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
-fun FileUploadScreen(modifier: Modifier = Modifier) {
+fun FileUploadScreen(
+    modifier: Modifier = Modifier,
+    uploadFileScreenComponent: UploadFileScreenComponent
+) {
     val viewModel = koinViewModel<FileSystemViewModel>()
     val state = viewModel.uploadState
     val filePicker = rememberFilePickerLauncher { file ->
         file?.let {
-            viewModel.onEvent(FileOperationEvent.UploadFile(it.path.orEmpty()))
+            viewModel.onEvent(FileOperationEvent.UploadFile(it.name))
         }
     }
     ObserveAsEvent(viewModel.effect) {
@@ -47,7 +52,8 @@ fun FileUploadScreen(modifier: Modifier = Modifier) {
     ) {
         if (!state.isUploading) {
             SelectFileScreen(
-                selectAction = {  viewModel.onEvent(FileOperationEvent.SelectFile) }
+                selectAction = {  viewModel.onEvent(FileOperationEvent.SelectFile) },
+                backPressed = { uploadFileScreenComponent.backPressed() }
             )
         } else {
             ProgressIndicatorComponent(
@@ -67,6 +73,7 @@ fun FileUploadScreen(modifier: Modifier = Modifier) {
 fun SelectFileScreen(
     modifier: Modifier = Modifier,
     selectAction: () -> Unit = {},
+    backPressed: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -86,6 +93,19 @@ fun SelectFileScreen(
             }
         ) {
             Text(text = "Select a file")
+        }
+        Spacer(modifier =  Modifier.height(10.dp))
+        Button(
+            modifier = Modifier
+                .background(Color.Transparent)
+                .clip(
+                    RoundedCornerShape(5.dp)
+                ),
+            onClick = {
+                backPressed()
+            }
+        ) {
+            Text("Back to Screen B")
         }
     }
 }

@@ -10,6 +10,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import org.koin.compose.KoinContext
 import example.presentation.MyScreen
+import fileSystem.presentation.FileUploadScreen
 
 @Composable
 fun DecomposeMaterialApp(rootComponent: RootComponent) {
@@ -32,6 +33,13 @@ fun DecomposeMaterialApp(rootComponent: RootComponent) {
 
                     is RootComponent.Child.ScreenB -> {
                         ScreenB(modifier = Modifier, screenBComponent = child.screenBComponent)
+                    }
+
+                    is RootComponent.Child.UploadFileScreen -> {
+                        FileUploadScreen(
+                            modifier = Modifier,
+                            uploadFileScreenComponent = child.uploadFileScreenComponent
+                        )
                     }
                 }
             }

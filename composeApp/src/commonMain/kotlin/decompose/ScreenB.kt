@@ -33,5 +33,13 @@ fun ScreenB(modifier: Modifier = Modifier, screenBComponent: ScreenBComponent) {
         ) {
             Text(text = "Back to A")
         }
+        Button(
+            modifier = Modifier,
+            onClick = {
+                screenBComponent.navigationToUploadFileScreen()
+            }
+        ) {
+            Text(text = "Navigate to Upload File Screen")
+        }
     }
 }

@@ -47,8 +47,7 @@ class FileSystemViewModel(
     }
 
     private fun uploadFile(contentUri: String) {
-        uploadJob = uploadFileUseCase
-            .uploadFile(contentUri)
+        uploadJob = uploadFileUseCase(contentUri)
             .onStart {
                 uploadState = uploadState.copy(
                     isUploading = true
@@ -79,7 +78,7 @@ class FileSystemViewModel(
                 val message = when (cause) {
                     is FileNotFoundException -> "File not found!"
                     is UnresolvedAddressException -> "No internet!"
-                    else -> "Something went wrong"
+                    else -> "Something went wrong!"
                 }
                 uploadState = uploadState.copy(
                     isUploading = false,
@@ -91,6 +90,7 @@ class FileSystemViewModel(
     }
 
     private fun cancelUploadJob() {
+        Napier.d("Job canceled!")
         uploadJob?.cancel()
     }
 }

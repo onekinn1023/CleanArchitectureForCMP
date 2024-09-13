@@ -20,6 +20,9 @@ interface RootComponent {
     sealed class Child {
         data class ScreenB(val screenBComponent: ScreenBComponent) : Child()
         data class MyScreen(val myScreenComponent: MyScreenComponent) : Child()
+        data class UploadFileScreen(
+            val uploadFileScreenComponent: UploadFileScreenComponent
+        ) : Child()
     }
 
     fun interface Factory {
@@ -30,7 +33,8 @@ interface RootComponent {
 class AppRootComponent(
     componentContext: ComponentContext,
     private val myScreenComponentFactory: MyScreenComponent.Factory,
-    private val screenBComponentFactory: ScreenBComponent.Factory
+    private val screenBComponentFactory: ScreenBComponent.Factory,
+    private val uploadFileScreenComponentFactory: UploadFileScreenComponent.Factory
 ) : RootComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Configuration>()
@@ -62,6 +66,16 @@ class AppRootComponent(
                     screenBComponentFactory(
                         componentContext = componentContext,
                         title = configuration.title,
+                        backPressed = { navigation.pop() },
+                        navigationToUploadFile = { navigation.push(Configuration.UploadFileScreen) }
+                    )
+                )
+            }
+
+            Configuration.UploadFileScreen -> {
+                RootComponent.Child.UploadFileScreen(
+                    uploadFileScreenComponentFactory(
+                        componentContext = componentContext,
                         backPressed = { navigation.pop() }
                     )
                 )
@@ -75,13 +89,15 @@ class AppRootComponent(
 
     class Factory(
         private val myScreenComponentFactory: MyScreenComponent.Factory,
-        private val screenBComponentFactory: ScreenBComponent.Factory
+        private val screenBComponentFactory: ScreenBComponent.Factory,
+        private val uploadFileScreenComponentFactory: UploadFileScreenComponent.Factory
     ) : RootComponent.Factory {
         override fun invoke(componentContext: ComponentContext): RootComponent {
             return AppRootComponent(
                 componentContext,
                 myScreenComponentFactory,
-                screenBComponentFactory
+                screenBComponentFactory,
+                uploadFileScreenComponentFactory
             )
         }
     }
@@ -95,5 +111,8 @@ class AppRootComponent(
 
         @Serializable
         data object MyScreen : Configuration
+
+        @Serializable
+        data object UploadFileScreen : Configuration
     }
 }
