@@ -67,7 +67,7 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
                                 override fun onDrop(event: DragAndDropEvent): Boolean {
                                     val text = event.toAndroidDragEvent().clipData
                                         ?.getItemAt(0)?.text
-                                    println("Drag data was $text")
+                                    println("Drag example.data was $text")
 
                                     dragBoxIndex = index
                                     return true

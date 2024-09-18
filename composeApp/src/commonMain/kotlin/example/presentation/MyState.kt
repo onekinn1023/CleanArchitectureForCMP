@@ -1,4 +1,4 @@
-package presentation
+package example.presentation
 
 data class MyState(
     val exampleNetText: String = "",

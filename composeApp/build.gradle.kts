@@ -35,9 +35,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
 
-            implementation(libs.koin.android)
-            implementation(libs.koin.androidx.compose)
-
+            implementation(libs.bundles.koin.android)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.core.splashscreen)
         }
@@ -50,25 +48,27 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
 
             api(libs.koin.core)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.bundles.koin.common)
             implementation(libs.lifecycle.viewmodel)
             implementation(libs.navigation.compose)
 
             implementation(libs.bundles.ktor)
 
-            api(libs.datastore.preferences)
-            api(libs.datastore)
+            api(libs.bundles.datastore)
 
-            api(libs.moko.permissions)
-            api(libs.moko.permissions.compose)
+            api(libs.bundles.mock.permissions)
             implementation(libs.kotlinx.datetime)
 
             implementation(libs.bundles.decompose)
             implementation(libs.cmp.napier)
+            implementation(libs.okio)
+            implementation(libs.bundles.file.kit)
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)
+        }
+        commonTest.dependencies {
+            implementation(libs.okio.test)
         }
     }
 }

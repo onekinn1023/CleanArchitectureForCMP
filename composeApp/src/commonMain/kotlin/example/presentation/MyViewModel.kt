@@ -1,9 +1,9 @@
-package presentation
+package example.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import data.MyRepository
-import domain.ExampleOperationUseCase
+import example.data.MyRepository
+import example.domain.ExampleOperationUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

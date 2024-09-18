@@ -40,7 +40,7 @@ inline fun <T, E : Error> Result<T, E>.onError(action: (E) -> Unit): Result<T, E
 
 inline fun <T, E : Error> Result<T, E>.getOrThrow(): T {
     return when (this) {
-        is Result.Error -> throw Exception("Cannot get data!")
+        is Result.Error -> throw Exception("Cannot get example.data!")
         is Result.Success -> {
             this.data
         }

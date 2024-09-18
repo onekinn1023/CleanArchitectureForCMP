@@ -11,11 +11,14 @@ interface ScreenBComponent {
 
     fun backToA()
 
+    fun navigationToUploadFileScreen()
+
     fun interface Factory {
         operator fun invoke(
             componentContext: ComponentContext,
             title: String,
-            backPressed: () -> Unit
+            backPressed: () -> Unit,
+            navigationToUploadFile: () -> Unit
         ): ScreenBComponent
     }
 }
@@ -23,7 +26,8 @@ interface ScreenBComponent {
 class DefaultScreenBComponent(
     componentContext: ComponentContext,
     private val title: String,
-    private val onBackPressed: () -> Unit
+    private val onBackPressed: () -> Unit,
+    private val navigationToUploadFile: () -> Unit
 ) : ScreenBComponent, ComponentContext by componentContext {
 
     override val uiState: Value<String> = flow {
@@ -34,16 +38,22 @@ class DefaultScreenBComponent(
         onBackPressed()
     }
 
+    override fun navigationToUploadFileScreen() {
+        navigationToUploadFile()
+    }
+
     class Factory : ScreenBComponent.Factory {
         override fun invoke(
             componentContext: ComponentContext,
             title: String,
-            backPressed: () -> Unit
+            backPressed: () -> Unit,
+            navigationToUploadFile: () -> Unit
         ): ScreenBComponent {
             return DefaultScreenBComponent(
                 componentContext,
                 title,
-                backPressed
+                backPressed,
+                navigationToUploadFile
             )
         }
     }
