@@ -15,7 +15,7 @@ interface UploadFileScreenComponent {
 class DefaultUploadFileScreenComponent(
     componentContext: ComponentContext,
     val onBackPressed: () -> Unit
-    ): UploadFileScreenComponent {
+    ): UploadFileScreenComponent, ComponentContext by componentContext {
 
     override fun backPressed() {
         onBackPressed()

@@ -1,8 +1,6 @@
 package fileSystem.data
 
-import dataStore.local.FileReader
 import fileSystem.domain.ProgressUpdate
-import io.github.aakira.napier.Napier
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.onUpload
 import io.ktor.client.request.forms.formData
