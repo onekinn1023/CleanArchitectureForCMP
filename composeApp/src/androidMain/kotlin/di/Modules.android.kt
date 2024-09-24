@@ -2,6 +2,7 @@ package di
 
 import dataStore.local.DataStoreFactory
 import dataStore.remote.createHttpClient
+import fileSystem.FileHelper
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import org.koin.core.module.Module
@@ -12,6 +13,7 @@ import org.koin.dsl.module
 actual fun platformModule(logEnabled: Boolean): Module = module {
     single { createHttpClient() }
     single { DataStoreFactory(get()) }.bind<DataStoreFactory>()
+    single { FileHelper.SYSTEM }.bind<FileHelper>()
 }.also {
     if (logEnabled) {
         Napier.base(DebugAntilog())
