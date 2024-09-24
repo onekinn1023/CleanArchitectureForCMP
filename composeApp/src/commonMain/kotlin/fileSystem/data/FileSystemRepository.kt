@@ -1,6 +1,9 @@
 package fileSystem.data
 
+import androidx.compose.ui.graphics.Path
+import cmpforlearn.composeapp.generated.resources.Res
 import dataStore.local.FileReader
+import fileSystem.FileHelper
 import fileSystem.domain.ProgressUpdate
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.onUpload
@@ -11,6 +14,7 @@ import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
+import okio.Path.Companion.toPath
 import provider.DispatcherProvider
 import provider.SchedulePort
 import utils.LocalError
@@ -21,12 +25,15 @@ interface FileSystemRepository {
     fun uploadFile(info: FileInfo): Flow<ProgressUpdate>
 
     suspend fun getFile(url: String): Result<FileInfo, LocalError>
+
+    suspend fun zipFile(fileAbsolutePath: String): Result<Unit, LocalError>
 }
 
 class FileSystemRepositoryImpl(
     private val httpClient: HttpClient,
     private val dispatcherProvider: DispatcherProvider.Factory,
-    private val fileReader: FileReader
+    private val fileReader: FileReader,
+    private val fileHelper: FileHelper
 ) : SchedulePort(), FileSystemRepository {
 
     override val scheduler: CoroutineDispatcher
@@ -59,4 +66,12 @@ class FileSystemRepositoryImpl(
         scheduleCatchingLocalWork {
             fileReader.uriToFileInfo(url)
         }
+
+    override suspend fun zipFile(fileAbsolutePath: String): Result<Unit, LocalError> {
+       return scheduleCatchingLocalWork {
+           val path = fileAbsolutePath.toPath()
+           val outputZip = path.parent.toString() + "/${path.name}.zip"
+           fileHelper.compressFile(outputZip, fileAbsolutePath)
+       }
+    }
 }

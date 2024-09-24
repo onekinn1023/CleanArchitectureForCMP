@@ -9,7 +9,7 @@ import org.koin.dsl.module
 import fileSystem.presentation.FileSystemViewModel
 
 val fileSystemModule = module {
-    single { FileSystemRepositoryImpl(get(), get(), get()) }.bind<FileSystemRepository>()
+    single { FileSystemRepositoryImpl(get(), get(), get(), get()) }.bind<FileSystemRepository>()
     single { UploadFileUseCase(get()) }
     viewModelOf(::FileSystemViewModel)
 }
