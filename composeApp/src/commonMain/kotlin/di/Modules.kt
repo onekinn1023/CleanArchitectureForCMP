@@ -1,6 +1,5 @@
 package di
 
-import dataStore.local.FileReader
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
@@ -13,5 +12,4 @@ val providerModule = module {
     single<DispatcherProvider.Factory> {
         DefaultDispatcher.Factory()
     }
-    single { FileReader(get()) }
 }
