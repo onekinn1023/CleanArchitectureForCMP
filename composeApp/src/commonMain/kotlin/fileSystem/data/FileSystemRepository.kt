@@ -2,9 +2,9 @@ package fileSystem.data
 
 import androidx.compose.ui.graphics.Path
 import cmpforlearn.composeapp.generated.resources.Res
-import dataStore.local.FileReader
 import fileSystem.FileHelper
 import fileSystem.domain.ProgressUpdate
+import fileSystem.getUUID
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.onUpload
 import io.ktor.client.request.forms.formData
@@ -14,7 +14,10 @@ import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.withContext
+import okio.FileSystem
 import okio.Path.Companion.toPath
+import okio.SYSTEM
 import provider.DispatcherProvider
 import provider.SchedulePort
 import utils.LocalError
@@ -32,12 +35,11 @@ interface FileSystemRepository {
 class FileSystemRepositoryImpl(
     private val httpClient: HttpClient,
     private val dispatcherProvider: DispatcherProvider.Factory,
-    private val fileReader: FileReader,
     private val fileHelper: FileHelper
 ) : SchedulePort(), FileSystemRepository {
 
     override val scheduler: CoroutineDispatcher
-        get() = dispatcherProvider().default
+        get() = dispatcherProvider().io
 
     override fun uploadFile(info: FileInfo): Flow<ProgressUpdate> = channelFlow {
         httpClient.submitFormWithBinaryData(
@@ -64,14 +66,24 @@ class FileSystemRepositoryImpl(
 
     override suspend fun getFile(url: String): Result<FileInfo, LocalError> =
         scheduleCatchingLocalWork {
-            fileReader.uriToFileInfo(url)
+            val path = url.toPath()
+            val bytes = FileSystem.SYSTEM.read(path) {
+                readByteArray()
+            }
+            val name = getUUID()
+            val mimeType = path.name.substringAfterLast('.', "").lowercase()
+            FileInfo(
+                name = name,
+                mimeType = mimeType,
+                bytes = bytes
+            )
         }
 
     override suspend fun zipFile(fileAbsolutePath: String): Result<Unit, LocalError> {
-       return scheduleCatchingLocalWork {
-           val path = fileAbsolutePath.toPath()
-           val outputZip = path.parent.toString() + "/${path.name}.zip"
-           fileHelper.compressFile(outputZip, fileAbsolutePath)
-       }
+        return scheduleCatchingLocalWork {
+            val path = fileAbsolutePath.toPath()
+            val outputZip = path.parent.toString() + "/${path.name}.zip"
+            fileHelper.compressFile(outputZip, fileAbsolutePath)
+        }
     }
 }
