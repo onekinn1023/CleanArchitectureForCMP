@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
+    id("taka.first.custom-plugin")
 }
 
 kotlin {
@@ -95,7 +96,7 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
         }
         getByName("debug") {
             isDebuggable = true
@@ -116,3 +117,6 @@ android {
     }
 }
 
+testPlugins {
+    message = "This is extensins for plugins"
+}
