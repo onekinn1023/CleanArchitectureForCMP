@@ -1,6 +1,8 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.fir.declarations.builder.buildScript
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+//apply(plugin = "com.example.library-plugin")
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -8,7 +10,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    id("taka.first.custom-plugin")
+    id("com.example.library-plugin")
 }
 
 kotlin {
@@ -31,7 +33,6 @@ kotlin {
     }
     
     sourceSets {
-        
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -115,8 +116,4 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
-}
-
-testPlugins {
-    message = "This is extensins for plugins"
 }

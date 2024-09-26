@@ -36,6 +36,7 @@ napier = "2.7.1"
 okio = "3.9.0"
 
 file-kit = "0.8.2"
+jetbrainsKotlinJvm = "1.9.22"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -89,6 +90,8 @@ okio-test = { module = "com.squareup.okio:okio-fakefilesystem", version.ref = "o
 file-kit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "file-kit"}
 file-kit-compoes = { module = "io.github.vinceglb:filekit-compose", version.ref = "file-kit" }
 
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -96,6 +99,7 @@ jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 
 [bundles]
 ktor = [
