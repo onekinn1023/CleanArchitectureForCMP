@@ -79,6 +79,7 @@ file-kit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "fil
 file-kit-compoes = { module = "io.github.vinceglb:filekit-compose", version.ref = "file-kit" }
 
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

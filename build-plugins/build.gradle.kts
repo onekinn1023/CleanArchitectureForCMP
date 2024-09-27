@@ -4,6 +4,7 @@ plugins {
 }
 
 repositories {
+    google()
     mavenCentral()
 }
 
@@ -18,9 +19,14 @@ gradlePlugin {
             id = "com.example.library-plugin"
             implementationClass = "com.example.MobileLibraryPlugins"
         }
+        create("android-core") {
+            id = "com.example.androidCore-plugin"
+            implementationClass = "com.example.AndroidCorePlugins"
+        }
     }
 }
 
 dependencies {
-    implementation(libs.kotlin.gradlePlugin)
+    compileOnly(libs.kotlin.gradlePlugin)
+    compileOnly(libs.android.gradlePlugin)
 }

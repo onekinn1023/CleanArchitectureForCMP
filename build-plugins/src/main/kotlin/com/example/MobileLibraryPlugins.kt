@@ -12,15 +12,17 @@ class MobileLibraryPlugins : Plugin<Project> {
         }
         val extensions: MobileLibraryPluginsExtensions =
             target.extensions.create("libraryMessage", MobileLibraryPluginsExtensions::class.java)
-        println(extensions.message)
-        target.configure<KotlinMultiplatformExtension> {
-            with(this.sourceSets) {
-                getByName("commonMain").dependencies {
-                    implementation(Dependencies.NAPIER)
-                    implementation(Dependencies.KOTLIN_DATE)
-                    if (extensions.isNeedLocalData) {
-                        api(Dependencies.DATASTORE_CORE)
-                        api(Dependencies.DATASTORE_PEREFERENCE)
+        target.afterEvaluate {
+            println(extensions.message)
+            target.configure<KotlinMultiplatformExtension> {
+                with(this.sourceSets) {
+                    getByName("commonMain").dependencies {
+                        implementation(Dependencies.NAPIER)
+                        implementation(Dependencies.KOTLIN_DATE)
+                        if (extensions.isNeedLocalData) {
+                            api(Dependencies.DATASTORE_CORE)
+                            api(Dependencies.DATASTORE_PEREFERENCE)
+                        }
                     }
                 }
             }
@@ -31,5 +33,5 @@ class MobileLibraryPlugins : Plugin<Project> {
 open class MobileLibraryPluginsExtensions {
     var message: String = "This is my first library plugin"
     var isNeedInject: Boolean = true
-    var isNeedLocalData : Boolean = true
+    var isNeedLocalData: Boolean = true
 }
