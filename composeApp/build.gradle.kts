@@ -62,7 +62,7 @@ kotlin {
             implementation(libs.kotlinx.datetime)
 
             implementation(libs.bundles.decompose)
-            implementation(libs.cmp.napier)
+//            implementation(libs.cmp.napier)
             implementation(libs.okio)
             implementation(libs.bundles.file.kit)
         }
