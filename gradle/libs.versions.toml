@@ -23,15 +23,10 @@ lifecycleViewModelCompose = "2.8.0"
 core-splashscreen = "1.0.1"
 
 ktor = "2.3.12"
-datastore = "1.1.1"
 
 moko = "0.18.0"
 
-datetime = "0.6.0"
-
 decompose = "3.1.0"
-
-napier = "2.7.1"
 
 okio = "3.9.0"
 
@@ -69,20 +64,13 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "k
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 
-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
-
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
 
 moko-permissions = { module = "dev.icerock.moko:permissions", version.ref = "moko" }
 moko-permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "moko" }
 
-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime"}
-
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-extensions-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose" }
-
-cmp-napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 okio-test = { module = "com.squareup.okio:okio-fakefilesystem", version.ref = "okio" }
@@ -108,10 +96,6 @@ ktor = [
     "ktor-client-auth",
     "ktor-client-logging",
     "ktor-serialization-kotlinx-json",
-]
-datastore = [
-    "datastore",
-    "datastore-preferences"
 ]
 decompose = [
     "decompose",

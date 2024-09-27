@@ -56,13 +56,9 @@ kotlin {
 
             implementation(libs.bundles.ktor)
 
-            api(libs.bundles.datastore)
-
             api(libs.bundles.mock.permissions)
-            implementation(libs.kotlinx.datetime)
 
             implementation(libs.bundles.decompose)
-//            implementation(libs.cmp.napier)
             implementation(libs.okio)
             implementation(libs.bundles.file.kit)
         }
@@ -116,4 +112,8 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
+}
+
+libraryMessage {
+    isNeedLocalData = true
 }

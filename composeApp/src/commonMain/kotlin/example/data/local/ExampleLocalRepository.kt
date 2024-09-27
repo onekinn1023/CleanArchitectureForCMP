@@ -24,7 +24,7 @@ interface ExampleLocalRepository {
 }
 
 class ExampleLocalRepositoryImpl(
-    val dataStore: DataStoreFactory,
+    private val dataStore: DataStoreFactory,
     private val dispatcherProvider: DispatcherProvider.Factory
 ): ExampleLocalRepository, SchedulePort() {
 

@@ -16,7 +16,12 @@ class MobileLibraryPlugins : Plugin<Project> {
         target.configure<KotlinMultiplatformExtension> {
             with(this.sourceSets) {
                 getByName("commonMain").dependencies {
-                    implementation(Dependencies.Napier)
+                    implementation(Dependencies.NAPIER)
+                    implementation(Dependencies.KOTLIN_DATE)
+                    if (extensions.isNeedLocalData) {
+                        api(Dependencies.DATASTORE_CORE)
+                        api(Dependencies.DATASTORE_PEREFERENCE)
+                    }
                 }
             }
         }
@@ -25,4 +30,6 @@ class MobileLibraryPlugins : Plugin<Project> {
 
 open class MobileLibraryPluginsExtensions {
     var message: String = "This is my first library plugin"
+    var isNeedInject: Boolean = true
+    var isNeedLocalData : Boolean = true
 }
