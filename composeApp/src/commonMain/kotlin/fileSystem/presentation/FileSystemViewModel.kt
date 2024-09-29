@@ -23,7 +23,9 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import okio.FileNotFoundException
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class FileSystemViewModel(
     private val uploadFileUseCase: UploadFileUseCase
 ) : ViewModel() {

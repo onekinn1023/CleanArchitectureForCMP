@@ -3,6 +3,7 @@ package dataStore.local
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import org.koin.core.annotation.Single
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class DataStoreFactory(private val context: Context) {

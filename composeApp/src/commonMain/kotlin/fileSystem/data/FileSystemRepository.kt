@@ -18,6 +18,7 @@ import kotlinx.coroutines.withContext
 import okio.FileSystem
 import okio.Path.Companion.toPath
 import okio.SYSTEM
+import org.koin.core.annotation.Single
 import provider.DispatcherProvider
 import provider.SchedulePort
 import utils.LocalError
@@ -32,6 +33,7 @@ interface FileSystemRepository {
     suspend fun zipFile(fileAbsolutePath: String): Result<Unit, LocalError>
 }
 
+@Single
 class FileSystemRepositoryImpl(
     private val httpClient: HttpClient,
     private val dispatcherProvider: DispatcherProvider,

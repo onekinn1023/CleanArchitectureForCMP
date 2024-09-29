@@ -1,27 +1,44 @@
 package example.di
 
-import example.data.MyRepository
+import dataStore.local.DataStoreFactory
 import example.data.local.ExampleLocalRepository
 import example.data.local.ExampleLocalRepositoryImpl
 import example.data.remote.ExampleHttpRepository
 import example.data.remote.ExampleHttpRepositoryImpl
-import example.domain.ExampleOperationUseCase
-import org.koin.compose.viewmodel.dsl.viewModelOf
-import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.bind
-import org.koin.dsl.module
-import example.data.MyRepositoryImpl
-import example.presentation.MyViewModel
-import example.presentation.PermissionViewModel
+import io.ktor.client.HttpClient
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Module
+import org.koin.core.annotation.Single
+import provider.DispatcherProvider
 
-val exampleModule = module {
-    // Data
-    singleOf(::MyRepositoryImpl).bind<MyRepository>()
-    single { ExampleHttpRepositoryImpl(get(), get()) }.bind<ExampleHttpRepository>()
-    single { ExampleLocalRepositoryImpl(get(), get()) }.bind<ExampleLocalRepository>()
-    // Domain
-    single { ExampleOperationUseCase(get(), get()) }
-    // Presentation
-    viewModelOf(::MyViewModel)
-    viewModelOf(::PermissionViewModel)
+@Module
+@ComponentScan("example.presentation")
+class ExampleViewModelModule
+
+@Module
+@ComponentScan("example.domain")
+class ExampleDomainModule
+
+@Module
+@ComponentScan("example.data")
+class ExampleDataModule {
+
+    @Single
+    fun provideExampleLocalRepository(
+//        dataStoreFactory: DataStoreFactory,
+        dataProvider: DispatcherProvider
+    ): ExampleLocalRepository {
+        return ExampleLocalRepositoryImpl(dataProvider)
+    }
+
+    @Single
+    fun provideExampleHttpRepository(
+        httpClient: HttpClient,
+        dataProvider: DispatcherProvider
+    ): ExampleHttpRepository {
+        return ExampleHttpRepositoryImpl(httpClient, dataProvider)
+    }
 }
+
+@Module(includes = [ExampleDataModule::class, ExampleDomainModule::class, ExampleViewModelModule::class])
+class ExampleModule

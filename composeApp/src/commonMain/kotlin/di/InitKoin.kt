@@ -1,11 +1,12 @@
 package di
 
-import decompose.di.componentsModule
-import example.di.exampleModule
-import fileSystem.di.fileSystemModule
+import decompose.di.DecomposeModule
+import example.di.ExampleModule
+import fileSystem.di.FileSystemModule
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
+import org.koin.ksp.generated.module
 
 fun initKoin(
     config: KoinAppDeclaration? = null,
@@ -15,10 +16,11 @@ fun initKoin(
         config?.invoke(this)
         modules(
             platformModule(logEnabled),
-            providerModule,
-            exampleModule,
-            componentsModule,
-            fileSystemModule
+            ProviderModule().module,
+            ExampleModule().module,
+            DecomposeModule().module,
+            FileSystemModule().module,
+            PlatformDataModule().module,
         )
     }
 }

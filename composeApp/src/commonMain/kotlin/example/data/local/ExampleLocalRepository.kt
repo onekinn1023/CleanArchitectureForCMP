@@ -11,6 +11,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import org.koin.core.annotation.Single
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.mp.KoinPlatform
 import utils.LocalError
 import utils.Result
 
@@ -24,16 +28,15 @@ interface ExampleLocalRepository {
 }
 
 class ExampleLocalRepositoryImpl(
-    private val dataStore: DataStoreFactory,
     private val dispatcherProvider: DispatcherProvider
-): ExampleLocalRepository, SchedulePort() {
+) : ExampleLocalRepository, SchedulePort(), KoinComponent {
 
     override val scheduler: CoroutineDispatcher
         get() = dispatcherProvider.io
 
-    private val db : DataStore<Preferences> by lazy {
-        dataStore.createExampleDataStore()
-    }
+    private val dataStoreFactory: DataStoreFactory by inject()
+
+    private val db: DataStore<Preferences> by lazy { dataStoreFactory.createExampleDataStore() }
 
     private val exampleKey = stringPreferencesKey(EXAMPLE_KEY)
 
@@ -41,7 +44,7 @@ class ExampleLocalRepositoryImpl(
 
     override suspend fun getLocalData(): Result<String, LocalError> {
         return scheduleCatchingLocalWork {
-           exampleTextFlow.first()
+            exampleTextFlow.first()
         }
     }
 

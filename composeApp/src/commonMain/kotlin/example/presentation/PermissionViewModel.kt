@@ -12,7 +12,9 @@ import dev.icerock.moko.permissions.PermissionState
 import dev.icerock.moko.permissions.PermissionsController
 import dev.icerock.moko.permissions.RequestCanceledException
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class PermissionViewModel: ViewModel() {
 
     var state by mutableStateOf(PermissionState.NotDetermined)

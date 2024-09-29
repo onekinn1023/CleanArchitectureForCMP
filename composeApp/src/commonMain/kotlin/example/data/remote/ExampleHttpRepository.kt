@@ -4,6 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import kotlinx.coroutines.CoroutineDispatcher
+import org.koin.core.annotation.Single
 import provider.DispatcherProvider
 import provider.SchedulePort
 import utils.NetworkError
