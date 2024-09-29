@@ -34,12 +34,12 @@ interface FileSystemRepository {
 
 class FileSystemRepositoryImpl(
     private val httpClient: HttpClient,
-    private val dispatcherProvider: DispatcherProvider.Factory,
+    private val dispatcherProvider: DispatcherProvider,
     private val fileHelper: FileHelper
 ) : SchedulePort(), FileSystemRepository {
 
     override val scheduler: CoroutineDispatcher
-        get() = dispatcherProvider().io
+        get() = dispatcherProvider.io
 
     override fun uploadFile(info: FileInfo): Flow<ProgressUpdate> = channelFlow {
         httpClient.submitFormWithBinaryData(

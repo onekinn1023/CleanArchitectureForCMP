@@ -9,7 +9,8 @@ import provider.DispatcherProvider
 expect fun platformModule(logEnabled: Boolean): Module
 
 val providerModule = module {
-    single<DispatcherProvider.Factory> {
-        DefaultDispatcher.Factory()
+    single<DispatcherProvider> {
+        DefaultDispatcher()
     }
 }
+

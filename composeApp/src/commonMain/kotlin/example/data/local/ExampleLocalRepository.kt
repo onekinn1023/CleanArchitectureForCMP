@@ -25,11 +25,11 @@ interface ExampleLocalRepository {
 
 class ExampleLocalRepositoryImpl(
     private val dataStore: DataStoreFactory,
-    private val dispatcherProvider: DispatcherProvider.Factory
+    private val dispatcherProvider: DispatcherProvider
 ): ExampleLocalRepository, SchedulePort() {
 
     override val scheduler: CoroutineDispatcher
-        get() = dispatcherProvider().io
+        get() = dispatcherProvider.io
 
     private val db : DataStore<Preferences> by lazy {
         dataStore.createExampleDataStore()
