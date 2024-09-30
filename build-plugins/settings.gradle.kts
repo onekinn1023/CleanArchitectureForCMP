@@ -1,4 +1,3 @@
-// empty.
 dependencyResolutionManagement {
     repositories {
         google()
@@ -10,3 +9,6 @@ dependencyResolutionManagement {
         }
     }
 }
+
+rootProject.name = "build-plugins"
+include(":convention")

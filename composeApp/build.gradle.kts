@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.fir.declarations.builder.buildScript
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
@@ -9,30 +6,11 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    id("com.example.library-plugin")
-    id("com.example.androidCore-plugin")
+    id("com.example.app.kotlinMultiplatform")
     alias(libs.plugins.ksp)
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
-
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
@@ -109,17 +87,8 @@ android {
             isMinifyEnabled = false
         }
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+
     dependencies {
         debugImplementation(compose.uiTooling)
     }
-}
-
-libraryMessage {
-    isNeedLocalData = true
-    message = "This is first plugin and messge was changed from build"
 }
