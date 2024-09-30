@@ -9,8 +9,6 @@ import provider.DispatcherProvider
 
 expect fun platformModule(logEnabled: Boolean): Module
 
-expect fun initNapier(logEnabled: Boolean)
-
 @org.koin.core.annotation.Module
 @ComponentScan("provider")
 class ProviderModule

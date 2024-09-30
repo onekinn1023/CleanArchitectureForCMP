@@ -12,7 +12,3 @@ actual fun platformModule(logEnabled: Boolean): Module = module {
 }.also {
     if (logEnabled) Napier.base(DebugAntilog())
 }
-
-actual fun initNapier(logEnabled: Boolean) {
-    if (logEnabled) Napier.base(DebugAntilog())
-}
