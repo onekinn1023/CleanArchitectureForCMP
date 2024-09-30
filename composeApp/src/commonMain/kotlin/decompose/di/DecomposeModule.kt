@@ -8,25 +8,38 @@ import decompose.MyScreenComponent
 import decompose.RootComponent
 import decompose.ScreenBComponent
 import decompose.UploadFileScreenComponent
+import org.koin.core.annotation.Module
+import org.koin.core.annotation.Single
 import org.koin.dsl.module
 
-val componentsModule = module {
-    single<ScreenBComponent.Factory> {
-        DefaultScreenBComponent.Factory()
-    }
-    single<MyScreenComponent.Factory> {
-        DefaultMyScreenComponent.Factory()
+@Module
+class DecomposeModule {
+
+    @Single
+    fun provideScreenBComponentFactory(): ScreenBComponent.Factory {
+        return DefaultScreenBComponent.Factory()
     }
 
-    single<UploadFileScreenComponent.Factory> {
-        DefaultUploadFileScreenComponent.Factory()
+    @Single
+    fun provideMyScreenComponentFactory(): MyScreenComponent.Factory {
+        return DefaultMyScreenComponent.Factory()
     }
 
-    single<RootComponent.Factory> {
-        AppRootComponent.Factory(
-            myScreenComponentFactory = get(),
-            screenBComponentFactory = get(),
-            uploadFileScreenComponentFactory = get()
+    @Single
+    fun provideUploadFileScreenComponentFactory(): UploadFileScreenComponent.Factory {
+        return DefaultUploadFileScreenComponent.Factory()
+    }
+
+    @Single
+    fun provideRootComponentFactory(
+        myScreenComponentFactory: MyScreenComponent.Factory,
+        screenBComponentFactory: ScreenBComponent.Factory,
+        uploadFileScreenComponentFactory: UploadFileScreenComponent.Factory
+    ): RootComponent.Factory {
+        return AppRootComponent.Factory(
+            myScreenComponentFactory = myScreenComponentFactory,
+            screenBComponentFactory = screenBComponentFactory,
+            uploadFileScreenComponentFactory = uploadFileScreenComponentFactory
         )
     }
 }

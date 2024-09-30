@@ -5,7 +5,9 @@ import fileSystem.data.FileSystemRepository
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import org.koin.core.annotation.Single
 
+@Single
 class UploadFileUseCase(
     private val fileSystemRepository: FileSystemRepository
 ) {

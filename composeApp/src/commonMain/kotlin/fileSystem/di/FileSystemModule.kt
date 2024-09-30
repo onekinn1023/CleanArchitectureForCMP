@@ -1,15 +1,19 @@
 package fileSystem.di
 
-import fileSystem.data.FileSystemRepository
-import fileSystem.data.FileSystemRepositoryImpl
-import fileSystem.domain.UploadFileUseCase
-import org.koin.compose.viewmodel.dsl.viewModelOf
-import org.koin.dsl.bind
-import org.koin.dsl.module
-import fileSystem.presentation.FileSystemViewModel
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Module
 
-val fileSystemModule = module {
-    single { FileSystemRepositoryImpl(get(), get(), get()) }.bind<FileSystemRepository>()
-    single { UploadFileUseCase(get()) }
-    viewModelOf(::FileSystemViewModel)
-}
+@Module
+@ComponentScan("fileSystem.presentation")
+class FileSystemViewModelModule
+
+@Module
+@ComponentScan("fileSystem.domain")
+class FileSystemDomainModule
+
+@Module
+@ComponentScan("FileSystem.data")
+class FileSystemDataModule
+
+@Module(includes = [FileSystemDataModule::class, FileSystemDomainModule::class, FileSystemViewModelModule::class])
+class FileSystemModule

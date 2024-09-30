@@ -13,7 +13,7 @@ actual abstract class FileHelper {
     actual abstract fun compressFile(outputZipPath: String, sourcePath: String): Path
 
     actual companion object {
-        val SYSTEM: FileHelper = run {
+        actual val SYSTEM: FileHelper = run {
             JvmFileHelper()
         }
     }

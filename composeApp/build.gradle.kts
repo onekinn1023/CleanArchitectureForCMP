@@ -1,6 +1,4 @@
-import org.jetbrains.kotlin.fir.declarations.builder.buildScript
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -8,35 +6,16 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    id("com.example.library-plugin")
-    id("com.example.androidCore-plugin")
+    id("com.example.app.kotlinMultiplatform")
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
-
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-
-            implementation(libs.bundles.koin.android)
+            implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.core.splashscreen)
         }
@@ -49,7 +28,9 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
 
             api(libs.koin.core)
-            implementation(libs.bundles.koin.common)
+            implementation(libs.koin.compose.viewmodel)
+            api(libs.koin.annotations)
+
             implementation(libs.lifecycle.viewmodel)
             implementation(libs.navigation.compose)
 
@@ -68,6 +49,29 @@ kotlin {
             implementation(libs.okio.test)
         }
     }
+
+    sourceSets.named("commonMain").configure {
+        kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+    }
+}
+
+dependencies {
+    add("kspCommonMainMetadata", libs.koin.ksp.compiler)
+    add("kspAndroid", libs.koin.ksp.compiler)
+    add("kspIosX64", libs.koin.ksp.compiler)
+    add("kspIosArm64", libs.koin.ksp.compiler)
+    add("kspIosSimulatorArm64", libs.koin.ksp.compiler)
+}
+
+project.tasks.withType(KotlinCompilationTask::class.java).configureEach {
+    if(name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+}
+
+ksp {
+    arg("KOIN_USE_COMPOSE_VIEWMODEL","true")
+    arg("KOIN_CONFIG_CHECK","true")
 }
 
 android {
@@ -83,17 +87,8 @@ android {
             isMinifyEnabled = false
         }
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+
     dependencies {
         debugImplementation(compose.uiTooling)
     }
-}
-
-libraryMessage {
-    isNeedLocalData = true
-    message = "This is first plugin and messge was changed from build"
 }

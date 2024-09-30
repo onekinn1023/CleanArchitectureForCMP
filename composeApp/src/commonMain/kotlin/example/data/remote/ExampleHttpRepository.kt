@@ -4,6 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import kotlinx.coroutines.CoroutineDispatcher
+import org.koin.core.annotation.Single
 import provider.DispatcherProvider
 import provider.SchedulePort
 import utils.NetworkError
@@ -16,11 +17,11 @@ interface ExampleHttpRepository {
 
 class ExampleHttpRepositoryImpl(
     private val httpClient: HttpClient,
-    private val dispatcherProvider: DispatcherProvider.Factory
+    private val dispatcherProvider: DispatcherProvider
 ): ExampleHttpRepository, SchedulePort() {
 
     override val scheduler: CoroutineDispatcher
-        get() = dispatcherProvider().default
+        get() = dispatcherProvider.default
 
     override suspend fun getExampleText(): Result<String, NetworkError> {
          return scheduleCatchingNetwork<CensoredText> {

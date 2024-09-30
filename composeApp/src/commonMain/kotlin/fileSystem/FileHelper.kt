@@ -9,5 +9,7 @@ expect abstract class FileHelper() {
 
     abstract fun compressFile(outputZipPath: String, sourcePath: String): Path
 
-    companion object
+    companion object {
+        val SYSTEM: FileHelper
+    }
 }
