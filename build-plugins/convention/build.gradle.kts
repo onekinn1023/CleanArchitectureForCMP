@@ -14,15 +14,19 @@ gradlePlugin {
     plugins {
         register("kotlinMultiplatform") {
             id = "com.example.app.kotlinMultiplatform"
-            implementationClass = "com.example.app.convention.KotlinMultiplatformPlugin"
+            implementationClass = "com.example.app.convention.KotlinMultiplatformApplicationPlugin"
         }
-        register("kmpConvention") {
+        register("kmpConventionLibrary") {
             id = "com.example.app.kmpConventionLibrary"
             implementationClass = "com.example.app.convention.KotlinConventionLibraryPlugin"
         }
         register("kmpKoin") {
             id = "com.example.app.kmpKoinConvention"
             implementationClass = "com.example.app.convention.KMPKoinPlugin"
+        }
+        register("KotlinModuleConvention") {
+            id = "com.example.app.kotlinModuleConvention"
+            implementationClass = "com.example.app.convention.KotlinModuleConventionPlugin"
         }
     }
 }

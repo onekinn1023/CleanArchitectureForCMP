@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     id("com.example.app.kotlinMultiplatform")
+    id("com.example.app.kmpKoinConvention")
     alias(libs.plugins.ksp)
 }
 
@@ -28,6 +29,8 @@ kotlin {
             implementation(libs.navigation.compose)
 
             implementation(libs.bundles.ktor)
+
+            implementation(project(":core"))
         }
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)

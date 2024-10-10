@@ -10,11 +10,6 @@ class KotlinConventionLibraryPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target.pluginManager) {
             apply(target.libs.findPlugin("kotlinMultiplatform").get().get().pluginId)
-//            val androidLibrary =
-//                target.libs.findPlugin("androidLibrary").get().get().pluginId
-//                if (!this.hasPlugin(androidLibrary)) {
-//                    apply(androidLibrary)
-//                }
             apply(target.libs.findPlugin("kotlin-serialization").get().get().pluginId)
         }
         target.run {
@@ -24,7 +19,6 @@ class KotlinConventionLibraryPlugin : Plugin<Project> {
                     KMPLibraryPluginsExtensions::class.java
                 )
             println(extension.message)
-            extensions.configure<BaseAppModuleExtension>(::configBaseAndroidModule)
             extensions.configure<KotlinMultiplatformExtension> {
                 afterEvaluate {
                     with(sourceSets) {

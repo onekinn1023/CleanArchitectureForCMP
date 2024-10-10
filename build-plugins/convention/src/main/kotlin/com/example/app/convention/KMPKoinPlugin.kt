@@ -11,7 +11,6 @@ class KMPKoinPlugin: Plugin<Project> {
     override fun apply(target: Project) {
         with(target.pluginManager) {
             apply(target.libs.findPlugin("kotlinMultiplatform").get().get().pluginId)
-            apply(target.libs.findPlugin("androidLibrary").get().get().pluginId)
             apply(target.libs.findPlugin("kotlin-serialization").get().get().pluginId)
             apply(target.libs.findPlugin("ksp").get().get().pluginId)
         }
@@ -40,7 +39,7 @@ class KMPKoinPlugin: Plugin<Project> {
     }
 }
 
-fun Project.configKoinKsp() {
+private fun Project.configKoinKsp() {
     dependencies {
         val compiler = libs.findLibrary("koin-ksp-compiler").get()
         add("kspCommonMainMetadata", compiler)

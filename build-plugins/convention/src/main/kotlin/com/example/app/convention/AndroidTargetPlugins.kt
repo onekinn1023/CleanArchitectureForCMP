@@ -1,5 +1,7 @@
 package com.example.app.convention
 
+import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -28,7 +30,7 @@ internal fun Project.configureKotlinAndroidTarget(
 }
 
 internal fun Project.configBaseAndroidModule(
-    extension: BaseAppModuleExtension
+    extension: CommonExtension<*, *, *, *, *>
 ) = extension.apply {
     val compliedSdk = libs.findVersion("android-compileSdk").get().requiredVersion.toInt()
     val minSdks = libs.findVersion("android-minSdk").get().requiredVersion.toInt()
@@ -37,7 +39,6 @@ internal fun Project.configBaseAndroidModule(
     compileSdk = compliedSdk
     defaultConfig {
         minSdk = minSdks
-        maxSdk = targetSdks
     }
     buildFeatures {
         compose = true
