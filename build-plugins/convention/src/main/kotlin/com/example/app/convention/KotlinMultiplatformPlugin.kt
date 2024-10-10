@@ -16,11 +16,12 @@ class KotlinMultiplatformPlugin : Plugin<Project> {
                 if (!plugins.hasPlugin(androidLibraryPluginId)) {
                     apply(androidLibraryPluginId)
                 }
+                apply("com.example.app.kmpConventionLibrary")
                 apply(target.libs.findPlugin("kotlin-serialization").get().get().pluginId)
                 apply(target.libs.findPlugin("ksp").get().get().pluginId)
             }
             extensions.configure<KotlinMultiplatformExtension>(::configureKotlinMultiplatform)
-            extensions.configure<BaseAppModuleExtension>(::configureKotlinAndroid)
+            extensions.configure<BaseAppModuleExtension>(::configureKotlinAndroidTarget)
         }
     }
 }

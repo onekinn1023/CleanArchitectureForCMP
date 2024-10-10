@@ -6,7 +6,7 @@
 //  Copyright © 2024 orgName. All rights reserved.
 //
 import Foundation
-import ComposeApp
+import composeApp
 
 typealias KoinApplication = Koin_coreKoinApplication
 typealias Koin = Koin_coreKoin

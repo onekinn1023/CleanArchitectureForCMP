@@ -16,5 +16,13 @@ gradlePlugin {
             id = "com.example.app.kotlinMultiplatform"
             implementationClass = "com.example.app.convention.KotlinMultiplatformPlugin"
         }
+        register("kmpConvention") {
+            id = "com.example.app.kmpConventionLibrary"
+            implementationClass = "com.example.app.convention.KotlinConventionLibraryPlugin"
+        }
+        register("kmpKoin") {
+            id = "com.example.app.kmpKoinConvention"
+            implementationClass = "com.example.app.convention.KMPKoinPlugin"
+        }
     }
 }
