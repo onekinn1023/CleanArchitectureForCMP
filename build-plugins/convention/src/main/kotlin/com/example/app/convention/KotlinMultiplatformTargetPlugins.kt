@@ -5,11 +5,11 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-internal fun Project.configureKotlinMultiplatform(
+internal fun Project.configureBaseKotlinMultiplatform(
     extension: KotlinMultiplatformExtension
 ) = extension.apply {
-    val extensions: KMPPluginsExtensions =
-        extensions.create("KMPMessageConfig", KMPPluginsExtensions::class.java)
+    val moduleName = path.split(":").drop(1).joinToString(".")
+    println("Kotlin-moduleName($moduleName)")
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -22,51 +22,8 @@ internal fun Project.configureKotlinMultiplatform(
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+            baseName = moduleName
             isStatic = true
         }
     }
-    afterEvaluate {
-        with(sourceSets) {
-            commonMain {
-                dependencies {
-                    implementation(libs.findLibrary("cmp-napier").get())
-                    implementation(libs.findLibrary("kotlinx-datetime").get())
-                    if (extensions.isNeedLocalData) {
-                        api(libs.findBundle("datastore").get())
-                    }
-                }
-            }
-//        koin ksp
-//            named("commonMain").configure {
-//                kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-//            }
-        }
-    }
 }
-
-open class KMPPluginsExtensions {
-    var message: String = "This is my first library plugin"
-    var isNeedInject: Boolean = true
-    var isNeedLocalData: Boolean = true
-}
-
-//internal fun Project.configKoinKsp() {
-//    dependencies {
-//        val compiler = libs.findLibrary("koin-ksp-compiler").get()
-//        add("kspCommonMainMetadata", compiler)
-//        add("kspAndroid", compiler)
-//        add("kspIosX64", compiler)
-//        add("kspIosArm64", compiler)
-//        add("kspIosSimulatorArm64", compiler)
-//    }
-//    tasks.withType(KotlinCompilationTask::class.java).configureEach {
-//        if (name != "kspCommonMainKotlinMetadata") {
-//            dependsOn("kspCommonMainKotlinMetadata")
-//        }
-//    }
-//    ksp {
-//        arg("KOIN_USE_COMPOSE_VIEWMODEL","true")
-//        arg("KOIN_CONFIG_CHECK","true")
-//    }
-//}

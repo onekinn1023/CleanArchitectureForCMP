@@ -30,3 +30,4 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 includeBuild("build-plugins")
+include(":core")

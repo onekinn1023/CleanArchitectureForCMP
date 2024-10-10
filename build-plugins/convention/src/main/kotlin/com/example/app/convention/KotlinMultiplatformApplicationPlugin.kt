@@ -6,21 +6,21 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-class KotlinMultiplatformPlugin : Plugin<Project> {
+class KotlinMultiplatformApplicationPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             with(target.pluginManager) {
                 apply(target.libs.findPlugin("kotlinMultiplatform").get().get().pluginId)
-                val androidLibraryPluginId =
-                    target.libs.findPlugin("androidApplication").get().get().pluginId
-                if (!plugins.hasPlugin(androidLibraryPluginId)) {
-                    apply(androidLibraryPluginId)
-                }
+                apply(target.libs.findPlugin("androidApplication").get().get().pluginId)
+                apply("com.example.app.kmpConventionLibrary")
                 apply(target.libs.findPlugin("kotlin-serialization").get().get().pluginId)
                 apply(target.libs.findPlugin("ksp").get().get().pluginId)
             }
-            extensions.configure<KotlinMultiplatformExtension>(::configureKotlinMultiplatform)
-            extensions.configure<BaseAppModuleExtension>(::configureKotlinAndroid)
+            extensions.configure<KotlinMultiplatformExtension>(::configureBaseKotlinMultiplatform)
+            extensions.configure<BaseAppModuleExtension> {
+                configBaseAndroidModule(this)
+                configureKotlinAndroidTarget(this)
+            }
         }
     }
 }
