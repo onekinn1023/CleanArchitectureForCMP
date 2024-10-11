@@ -7,6 +7,7 @@ import example.di.ExampleModule
 import fileSystem.di.FileSystemModule
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
+import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.ksp.generated.module
 
