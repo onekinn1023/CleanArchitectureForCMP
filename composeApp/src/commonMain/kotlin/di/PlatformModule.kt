@@ -1,8 +1,6 @@
 package di
 
-import dataStore.remote.createHttpClient
 import fileSystem.FileHelper
-import io.ktor.client.HttpClient
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
 
@@ -14,10 +12,10 @@ class PlatformDataModule {
         return FileHelper.SYSTEM
     }
 
-    @Single
-    fun provideHttpClient() : HttpClient {
-        return createHttpClient()
-    }
+//    @Single
+//    fun provideHttpClient() : HttpClient {
+//        return createHttpClient()
+//    }
 }
 
 //@Module

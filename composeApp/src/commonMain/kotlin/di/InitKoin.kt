@@ -1,5 +1,7 @@
 package di
 
+import com.example.core.common.di.CommonModule
+import com.example.core.di.CoreModule
 import decompose.di.DecomposeModule
 import example.di.ExampleModule
 import fileSystem.di.FileSystemModule
@@ -16,7 +18,7 @@ fun initKoin(
         config?.invoke(this)
         modules(
             platformModule(logEnabled),
-            ProviderModule().module,
+            CoreModule().module,
             ExampleModule().module,
             DecomposeModule().module,
             FileSystemModule().module,

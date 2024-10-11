@@ -1,5 +1,6 @@
 package example.data.remote
 
+import com.example.core.common.DispatcherProvider
 import com.example.core.common.NetworkError
 import com.example.core.common.Result
 import com.example.core.common.SchedulePort
@@ -8,7 +9,6 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import kotlinx.coroutines.CoroutineDispatcher
-import provider.DispatcherProvider
 
 interface ExampleHttpRepository {
     suspend fun getExampleText(): Result<String, NetworkError>

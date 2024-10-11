@@ -11,8 +11,6 @@ interface DispatcherProvider {
     val default: CoroutineDispatcher
 }
 
-
-@Single
 class DefaultDispatcher: DispatcherProvider {
     override val main: CoroutineDispatcher
         get() = Dispatchers.Main

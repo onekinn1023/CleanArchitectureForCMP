@@ -4,10 +4,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.example.core.common.DispatcherProvider
 import com.example.core.common.LocalError
 import com.example.core.common.Result
 import com.example.core.common.SchedulePort
-import provider.DispatcherProvider
 import dataStore.local.DataStoreFactory
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

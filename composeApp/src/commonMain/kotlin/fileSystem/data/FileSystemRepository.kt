@@ -1,7 +1,9 @@
 package fileSystem.data
 
+import com.example.core.common.DispatcherProvider
 import com.example.core.common.LocalError
 import com.example.core.common.Result
+import com.example.core.common.SchedulePort
 import fileSystem.FileHelper
 import fileSystem.domain.ProgressUpdate
 import fileSystem.getUUID
@@ -18,7 +20,6 @@ import okio.FileSystem
 import okio.Path.Companion.toPath
 import okio.SYSTEM
 import org.koin.core.annotation.Single
-import provider.DispatcherProvider
 
 interface FileSystemRepository {
 
