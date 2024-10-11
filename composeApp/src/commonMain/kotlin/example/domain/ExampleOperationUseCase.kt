@@ -1,13 +1,13 @@
 package example.domain
 
+import com.example.core.common.getOrThrow
+import com.example.core.common.onError
+import com.example.core.common.onSuccess
 import example.data.local.ExampleLocalRepository
 import example.data.remote.ExampleHttpRepository
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.annotation.Single
-import utils.getOrThrow
-import utils.onError
-import utils.onSuccess
 
 @Single
 class ExampleOperationUseCase(

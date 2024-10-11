@@ -1,6 +1,5 @@
 package example.di
 
-import dataStore.local.DataStoreFactory
 import example.data.local.ExampleLocalRepository
 import example.data.local.ExampleLocalRepositoryImpl
 import example.data.remote.ExampleHttpRepository

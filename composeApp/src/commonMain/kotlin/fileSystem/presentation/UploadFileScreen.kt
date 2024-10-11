@@ -19,17 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.core.common.ObserveAsEvent
 import decompose.UploadFileScreenComponent
-import fileSystem.data.FileInfo
 import io.github.aakira.napier.Napier
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
-import io.github.vinceglb.filekit.core.baseName
-import io.github.vinceglb.filekit.core.extension
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
-import utils.ObserveAsEvent
 
-@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun FileUploadScreen(
     modifier: Modifier = Modifier,

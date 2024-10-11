@@ -40,7 +40,7 @@ okio = "3.9.0"
 file-kit = "0.8.2"
 jetbrainsKotlinJvm = "1.9.22"
 
-ksp = "2.0.10-1.0.24"
+ksp = "2.0.20-1.0.25"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }

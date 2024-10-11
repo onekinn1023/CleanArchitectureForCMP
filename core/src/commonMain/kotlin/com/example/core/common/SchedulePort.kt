@@ -1,4 +1,4 @@
-package provider
+package com.example.core.common
 
 import io.github.aakira.napier.Napier
 import io.ktor.client.call.body
@@ -8,9 +8,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
-import utils.LocalError
-import utils.NetworkError
-import utils.Result
 
 abstract class SchedulePort {
 

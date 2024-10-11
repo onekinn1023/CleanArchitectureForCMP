@@ -2,9 +2,8 @@ package decompose
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
-import io.ktor.util.logging.Logger
+import com.example.core.navigatioin.asValue
 import kotlinx.coroutines.flow.flow
-import utils.asValue
 
 interface ScreenBComponent {
     val uiState: Value<String>

@@ -1,4 +1,4 @@
-package utils
+package com.example.core.navigatioin
 
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value

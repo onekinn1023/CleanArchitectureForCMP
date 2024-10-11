@@ -4,19 +4,17 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.example.core.common.LocalError
+import com.example.core.common.Result
+import com.example.core.common.SchedulePort
 import provider.DispatcherProvider
-import provider.SchedulePort
 import dataStore.local.DataStoreFactory
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import org.koin.core.annotation.Single
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.mp.KoinPlatform
-import utils.LocalError
-import utils.Result
 
 interface ExampleLocalRepository {
 
