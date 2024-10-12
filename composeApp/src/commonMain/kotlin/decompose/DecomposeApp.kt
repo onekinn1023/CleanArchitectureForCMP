@@ -10,7 +10,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import org.koin.compose.KoinContext
 import example.presentation.MyScreen
-import fileSystem.presentation.FileUploadScreen
+import example.presentation.FileUploadScreen
 
 @Composable
 fun DecomposeMaterialApp(rootComponent: RootComponent) {

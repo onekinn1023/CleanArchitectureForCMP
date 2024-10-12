@@ -11,9 +11,7 @@ import androidx.compose.ui.Modifier
 import dev.icerock.moko.permissions.PermissionState
 import dev.icerock.moko.permissions.PermissionsController
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.annotation.KoinExperimentalAPI
 
-@OptIn(KoinExperimentalAPI::class)
 @Composable
 fun RequirePermissionScreen(modifier: Modifier = Modifier, controller: PermissionsController) {
     Column(

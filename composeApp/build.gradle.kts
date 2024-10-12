@@ -15,7 +15,6 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.ktor.client.okhttp)
             implementation(libs.core.splashscreen)
         }
         commonMain.dependencies {
@@ -28,12 +27,7 @@ kotlin {
 
             implementation(libs.navigation.compose)
 
-            implementation(libs.bundles.ktor)
-
             implementation(project(":core"))
-        }
-        nativeMain.dependencies {
-            implementation(libs.ktor.client.darwin)
         }
     }
 }

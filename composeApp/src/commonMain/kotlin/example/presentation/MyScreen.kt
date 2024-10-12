@@ -1,4 +1,3 @@
-@file:OptIn(KoinExperimentalAPI::class)
 
 package example.presentation
 
@@ -20,10 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.core.common.ObserveAsEvent
 import decompose.MyScreenComponent
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
-import utils.ObserveAsEvent
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable

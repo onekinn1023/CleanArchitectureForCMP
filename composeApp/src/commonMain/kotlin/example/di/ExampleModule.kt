@@ -1,6 +1,6 @@
 package example.di
 
-import dataStore.local.DataStoreFactory
+import com.example.core.common.DispatcherProvider
 import example.data.local.ExampleLocalRepository
 import example.data.local.ExampleLocalRepositoryImpl
 import example.data.remote.ExampleHttpRepository
@@ -9,7 +9,6 @@ import io.ktor.client.HttpClient
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
-import provider.DispatcherProvider
 
 @Module
 @ComponentScan("example.presentation")

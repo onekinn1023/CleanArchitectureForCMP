@@ -1,8 +1,9 @@
 package di
 
+import com.example.core.di.CoreModule
+import com.example.core.filesystem.di.FileSystemModule
 import decompose.di.DecomposeModule
 import example.di.ExampleModule
-import fileSystem.di.FileSystemModule
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
@@ -16,11 +17,9 @@ fun initKoin(
         config?.invoke(this)
         modules(
             platformModule(logEnabled),
-            ProviderModule().module,
+            CoreModule().module,
             ExampleModule().module,
             DecomposeModule().module,
-            FileSystemModule().module,
-            PlatformDataModule().module,
         )
     }
 }
