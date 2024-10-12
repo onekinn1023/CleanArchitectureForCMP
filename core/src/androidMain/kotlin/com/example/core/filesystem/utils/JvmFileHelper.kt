@@ -1,4 +1,4 @@
-package fileSystem
+package com.example.core.filesystem.utils
 
 import okio.FileSystem
 import okio.Path
@@ -69,5 +69,3 @@ class JvmFileHelper : FileHelper() {
         }
     }
 }
-
-

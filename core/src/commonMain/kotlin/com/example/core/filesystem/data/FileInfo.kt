@@ -1,4 +1,4 @@
-package fileSystem.data
+package com.example.core.filesystem.data
 
 import io.ktor.http.ContentType
 

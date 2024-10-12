@@ -1,4 +1,4 @@
-package fileSystem
+package com.example.core.filesystem.utils
 
 import okio.Path
 import java.util.UUID
@@ -13,7 +13,7 @@ actual abstract class FileHelper {
     actual abstract fun compressFile(outputZipPath: String, sourcePath: String): Path
 
     actual companion object {
-        actual val SYSTEM: FileHelper = run {
+        actual val SYSTEM: FileHelper by lazy {
             JvmFileHelper()
         }
     }

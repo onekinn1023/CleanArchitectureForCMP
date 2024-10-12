@@ -1,12 +1,12 @@
-package fileSystem.presentation
+package com.example.core.filesystem.presentation
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import fileSystem.data.FileInfo
-import fileSystem.domain.UploadFileUseCase
+import com.example.core.filesystem.data.FileInfo
+import com.example.core.filesystem.domain.UploadFileUseCase
 import io.github.aakira.napier.Napier
 import io.github.vinceglb.filekit.core.PlatformFile
 import io.github.vinceglb.filekit.core.baseName

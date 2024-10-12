@@ -1,12 +1,11 @@
-package fileSystem.data
+package com.example.core.filesystem.data
 
 import com.example.core.common.DispatcherProvider
 import com.example.core.common.LocalError
 import com.example.core.common.Result
 import com.example.core.common.SchedulePort
-import fileSystem.FileHelper
-import fileSystem.domain.ProgressUpdate
-import fileSystem.getUUID
+import com.example.core.filesystem.utils.FileHelper
+import com.example.core.filesystem.utils.getUUID
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.onUpload
 import io.ktor.client.request.forms.formData
@@ -22,7 +21,6 @@ import okio.SYSTEM
 import org.koin.core.annotation.Single
 
 interface FileSystemRepository {
-
     fun uploadFile(info: FileInfo): Flow<ProgressUpdate>
 
     suspend fun getFile(url: String): Result<FileInfo, LocalError>

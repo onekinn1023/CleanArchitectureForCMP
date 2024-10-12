@@ -1,6 +1,5 @@
-package fileSystem.presentation
+package com.example.core.filesystem.presentation
 
-import fileSystem.data.FileInfo
 import io.github.vinceglb.filekit.core.PlatformFile
 
 data class UploadState(

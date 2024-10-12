@@ -1,7 +1,8 @@
-package fileSystem.domain
+package com.example.core.filesystem.domain
 
-import fileSystem.data.FileInfo
-import fileSystem.data.FileSystemRepository
+import com.example.core.filesystem.data.FileInfo
+import com.example.core.filesystem.data.FileSystemRepository
+import com.example.core.filesystem.data.ProgressUpdate
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -11,7 +12,6 @@ import org.koin.core.annotation.Single
 class UploadFileUseCase(
     private val fileSystemRepository: FileSystemRepository
 ) {
-
     operator fun invoke(info: FileInfo): Flow<ProgressUpdate> {
         if (info.bytes.isEmpty()) {
             Napier.e(

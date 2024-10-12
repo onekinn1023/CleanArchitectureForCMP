@@ -1,4 +1,4 @@
-package fileSystem.presentation
+package example.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +21,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.core.common.ObserveAsEvent
 import decompose.UploadFileScreenComponent
+import fileSystem.presentation.FileOperationEffect
+import fileSystem.presentation.FileOperationEvent
+import fileSystem.presentation.FileSystemViewModel
+import fileSystem.presentation.UploadState
 import io.github.aakira.napier.Napier
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import org.koin.compose.viewmodel.koinViewModel

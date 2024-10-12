@@ -1,4 +1,4 @@
-package fileSystem.domain
+package com.example.core.filesystem.data
 
 data class ProgressUpdate(
     val byteSent: Long,
