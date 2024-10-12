@@ -20,11 +20,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.core.common.ObserveAsEvent
+import com.example.core.filesystem.presentation.FileOperationEffect
+import com.example.core.filesystem.presentation.FileOperationEvent
+import com.example.core.filesystem.presentation.FileSystemViewModel
+import com.example.core.filesystem.presentation.UploadState
 import decompose.UploadFileScreenComponent
-import fileSystem.presentation.FileOperationEffect
-import fileSystem.presentation.FileOperationEvent
-import fileSystem.presentation.FileSystemViewModel
-import fileSystem.presentation.UploadState
 import io.github.aakira.napier.Napier
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import org.koin.compose.viewmodel.koinViewModel

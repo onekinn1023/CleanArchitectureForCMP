@@ -19,6 +19,11 @@ kotlin {
     }
 }
 
+ksp {
+    arg("KOIN_USE_COMPOSE_VIEWMODEL","true")
+    arg("KOIN_CONFIG_CHECK","true")
+}
+
 android {
     namespace = "com.example.core"
 }
