@@ -1,4 +1,4 @@
-package com.example.core.network
+package com.example.network.data
 
 import io.ktor.client.HttpClient
 

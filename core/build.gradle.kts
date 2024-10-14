@@ -13,6 +13,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             //put your multiplatform dependencies here
+            implementation(project(":network"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

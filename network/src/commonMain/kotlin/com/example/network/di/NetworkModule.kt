@@ -1,6 +1,6 @@
-package com.example.core.network.di
+package com.example.network.di
 
-import com.example.core.network.NetworkFactory
+import com.example.network.data.NetworkFactory
 import io.ktor.client.HttpClient
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single

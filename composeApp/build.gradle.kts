@@ -28,6 +28,7 @@ kotlin {
             implementation(libs.navigation.compose)
 
             implementation(project(":core"))
+            implementation(project(":network"))
         }
     }
 }
