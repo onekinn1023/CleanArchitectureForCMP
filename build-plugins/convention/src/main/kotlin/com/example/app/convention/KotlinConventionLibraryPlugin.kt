@@ -40,18 +40,16 @@ class KotlinConventionLibraryPlugin : Plugin<Project> {
                                 implementation(libs.findBundle("decompose").get())
                                 // viewModel
                                 implementation(libs.findLibrary("lifecycle-viewmodel").get())
-                                // network
-                                implementation(libs.findBundle("ktor").get())
                             }
                         }
                         androidMain {
                             dependencies {
-                                implementation(libs.findLibrary("ktor-client-okhttp").get())
+                                //put other dependencies here
                             }
                         }
                         nativeMain {
                             dependencies {
-                                implementation(libs.findLibrary("ktor-client-darwin").get())
+                                //put other dependencies here
                             }
                         }
                         commonTest {

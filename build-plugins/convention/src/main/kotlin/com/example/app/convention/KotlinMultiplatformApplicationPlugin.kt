@@ -12,6 +12,7 @@ class KotlinMultiplatformApplicationPlugin : Plugin<Project> {
             with(target.pluginManager) {
                 apply(target.libs.findPlugin("kotlinMultiplatform").get().get().pluginId)
                 apply(target.libs.findPlugin("androidApplication").get().get().pluginId)
+                apply("com.example.app.kmpKtorConvention")
                 apply("com.example.app.kmpConventionLibrary")
                 apply(target.libs.findPlugin("kotlin-serialization").get().get().pluginId)
                 apply(target.libs.findPlugin("ksp").get().get().pluginId)
