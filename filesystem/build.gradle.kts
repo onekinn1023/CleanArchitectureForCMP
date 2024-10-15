@@ -5,7 +5,6 @@ plugins {
     id("com.example.app.kotlinModuleConvention")
     id("com.example.app.kmpConventionLibrary")
     id("com.example.app.kmpKoinConvention")
-    id("com.example.app.kmpKtorConvention")
     alias(libs.plugins.ksp)
 }
 

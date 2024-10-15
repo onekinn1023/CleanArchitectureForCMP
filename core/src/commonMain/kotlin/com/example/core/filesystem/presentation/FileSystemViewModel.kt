@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.filesystem.data.FileInfo
 import com.example.core.filesystem.domain.UploadFileUseCase
+import com.example.network.data.FileInfo
 import io.github.aakira.napier.Napier
 import io.github.vinceglb.filekit.core.PlatformFile
 import io.github.vinceglb.filekit.core.baseName
