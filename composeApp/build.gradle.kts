@@ -29,6 +29,7 @@ kotlin {
 
             implementation(project(":core"))
             implementation(project(":network"))
+            implementation(project(":filesystem"))
         }
     }
 }

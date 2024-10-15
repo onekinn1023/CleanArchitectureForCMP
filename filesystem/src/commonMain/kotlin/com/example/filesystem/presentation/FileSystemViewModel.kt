@@ -1,17 +1,19 @@
-package com.example.core.filesystem.presentation
+package com.example.filesystem.presentation
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.filesystem.domain.UploadFileUseCase
+import com.example.core.filesystem.presentation.FileOperationEffect
+import com.example.core.filesystem.presentation.FileOperationEvent
+import com.example.core.filesystem.presentation.UploadState
+import com.example.filesystem.domain.UploadFileUseCase
 import com.example.network.data.FileInfo
 import io.github.aakira.napier.Napier
 import io.github.vinceglb.filekit.core.PlatformFile
 import io.github.vinceglb.filekit.core.baseName
 import io.github.vinceglb.filekit.core.extension
-import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -91,7 +93,6 @@ class FileSystemViewModel(
                     Napier.e("Failed to upload fileSystem due to $cause")
                     val message = when (cause) {
                         is FileNotFoundException -> "File not found!"
-                        is UnresolvedAddressException -> "No internet!"
                         else -> "Something went wrong!"
                     }
                     uploadState = uploadState.copy(

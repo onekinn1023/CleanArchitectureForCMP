@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import com.example.core.common.ObserveAsEvent
 import com.example.core.filesystem.presentation.FileOperationEffect
 import com.example.core.filesystem.presentation.FileOperationEvent
-import com.example.core.filesystem.presentation.FileSystemViewModel
 import com.example.core.filesystem.presentation.UploadState
+import com.example.filesystem.presentation.FileSystemViewModel
 import decompose.UploadFileScreenComponent
 import io.github.aakira.napier.Napier
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher

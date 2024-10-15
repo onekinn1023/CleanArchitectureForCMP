@@ -1,4 +1,4 @@
-package com.example.core.filesystem.domain
+package com.example.filesystem.domain
 
 import com.example.network.data.FileInfo
 import com.example.network.data.FileWordRepository

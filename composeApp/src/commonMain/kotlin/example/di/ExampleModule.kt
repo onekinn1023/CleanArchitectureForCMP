@@ -3,9 +3,6 @@ package example.di
 import com.example.core.common.DispatcherProvider
 import example.data.local.ExampleLocalRepository
 import example.data.local.ExampleLocalRepositoryImpl
-import example.data.remote.ExampleHttpRepository
-import example.data.remote.ExampleHttpRepositoryImpl
-import io.ktor.client.HttpClient
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
@@ -28,14 +25,6 @@ class ExampleDataModule {
         dataProvider: DispatcherProvider
     ): ExampleLocalRepository {
         return ExampleLocalRepositoryImpl(dataProvider)
-    }
-
-    @Single
-    fun provideExampleHttpRepository(
-        httpClient: HttpClient,
-        dataProvider: DispatcherProvider
-    ): ExampleHttpRepository {
-        return ExampleHttpRepositoryImpl(httpClient, dataProvider)
     }
 }
 

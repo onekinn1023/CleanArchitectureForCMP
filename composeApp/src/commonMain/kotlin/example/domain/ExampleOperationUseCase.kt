@@ -1,28 +1,34 @@
 package example.domain
 
 import com.example.core.common.getOrThrow
+import com.example.core.common.map
 import com.example.core.common.onError
 import com.example.core.common.onSuccess
+import com.example.network.data.FileWordRepository
+import com.example.network.domain.CensoredText
 import example.data.local.ExampleLocalRepository
-import example.data.remote.ExampleHttpRepository
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.annotation.Single
 
 @Single
 class ExampleOperationUseCase(
-    private val exampleHttpRepository: ExampleHttpRepository,
-    private val exampleLocalRepository: ExampleLocalRepository
+    private val exampleLocalRepository: ExampleLocalRepository,
+    private val fileWordRepository: FileWordRepository,
 ) {
 
     val exampleUseCaseFlow: Flow<String> = exampleLocalRepository.exampleTextFlow
 
-    suspend fun getExampleProcessText(): String {
-        return exampleHttpRepository.getExampleText().onSuccess {
+    suspend fun getExampleProcessText(text: String): String {
+        val censoredText = CensoredText(
+            result = text
+        )
+        return fileWordRepository.getCensoredText(censoredText).map {
             Napier.d(
                 tag = "ExampleOperationUseCase",
                 message = "getExampleProcessText: successfully with $it"
             )
+            it.result
         }.onError {
             Napier.e(
                 tag = "ExampleOperationUseCase",

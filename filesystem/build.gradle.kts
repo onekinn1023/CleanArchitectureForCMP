@@ -14,6 +14,7 @@ kotlin {
         commonMain.dependencies {
             //put your multiplatform dependencies here
             implementation(project(":core"))
+            implementation(project(":network"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -27,5 +28,5 @@ ksp {
 }
 
 android {
-    namespace = "com.example.network"
+    namespace = "com.example.filesystem"
 }

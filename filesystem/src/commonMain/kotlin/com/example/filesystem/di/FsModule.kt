@@ -1,24 +1,23 @@
-package com.example.core.filesystem.di
+package com.example.filesystem.di
 
 import com.example.core.common.DispatcherProvider
-import com.example.core.filesystem.data.FileSystemRepository
-import com.example.core.filesystem.data.FileSystemRepositoryImpl
-import com.example.core.filesystem.utils.FileHelper
-import io.ktor.client.HttpClient
+import com.example.filesystem.data.FileSystemRepository
+import com.example.filesystem.data.FileSystemRepositoryImpl
+import com.example.filesystem.utils.FileHelper
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
 
 @Module
-@ComponentScan("com.example.core.filesystem.presentation")
+@ComponentScan("com.example.filesystem.presentation")
 class FileSystemViewModelModule
 
 @Module
-@ComponentScan("com.example.core.filesystem.domain")
+@ComponentScan("com.example.filesystem.domain")
 class FileSystemDomainModule
 
 @Module
-@ComponentScan("com.example.core.filesystem.data")
+@ComponentScan("com.example.filesystem.data")
 class FileSystemDataModule {
 
     @Single
@@ -28,12 +27,10 @@ class FileSystemDataModule {
 
     @Single
     fun provideFileSystemRepository(
-        httpClient: HttpClient,
         dispatcherProvider: DispatcherProvider,
         fileHelper: FileHelper
     ): FileSystemRepository {
         return FileSystemRepositoryImpl(
-            httpClient = httpClient,
             dispatcherProvider = dispatcherProvider,
             fileHelper = fileHelper
         )

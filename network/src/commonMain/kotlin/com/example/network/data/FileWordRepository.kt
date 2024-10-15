@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.channelFlow
 
 
 interface FileWordRepository {
-    suspend fun getCensoredText(censoredTextDto: CensoredTextDto): Result<CensoredText, NetworkError>
+    suspend fun getCensoredText(censoredText: CensoredText): Result<CensoredText, NetworkError>
 
     fun uploadFile(info: FileInfo): Flow<ProgressUpdate>
 }
@@ -37,12 +37,12 @@ class FileWordRepositoryImpl(
         CensoredTextTypeConverter()
     }
 
-    override suspend fun getCensoredText(censoredTextDto: CensoredTextDto): Result<CensoredText, NetworkError> {
+    override suspend fun getCensoredText(censoredText: CensoredText): Result<CensoredText, NetworkError> {
         return scheduleCatchingNetwork<CensoredTextDto> {
             httpClient.get(
                 urlString = "https://www.purgomalum.com/service/json"
             ) {
-                parameter("text", censoredTextDto.result)
+                parameter("text", censoredText.result)
             }
         }.map {
             censoredTextTypeConverter.convertFromDto(it)

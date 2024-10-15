@@ -9,7 +9,7 @@ data class CensoredTextDto(
     val result: String
 )
 
-class CensoredTextTypeConverter : CloudTypeConverter<CensoredTextDto, CensoredText> {
+internal class CensoredTextTypeConverter : CloudTypeConverter<CensoredTextDto, CensoredText> {
 
     override fun convertFromDto(dto: CensoredTextDto): CensoredText {
         return CensoredText(

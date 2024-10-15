@@ -1,4 +1,4 @@
-package com.example.core.filesystem.utils
+package com.example.filesystem.utils
 
 import okio.FileSystem
 import okio.Path
