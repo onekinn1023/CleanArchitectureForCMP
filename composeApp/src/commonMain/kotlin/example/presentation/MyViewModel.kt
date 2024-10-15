@@ -42,21 +42,21 @@ class MyViewModel(
          *  b. 如果在viewModel的init初始化会导致进行Test时不可控
          *  c. 因此可以利用flow的onStart
          * */
-        onEvent(MyEvent.GetHelloWorld)
+        onEvent(MyAction.GetHelloWorld)
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000L), //只有默认设置5s才可以避免屏幕旋转时重新收集flow从而达到即时旋转状态也能稳定
         MyState()
     )
 
-    fun onEvent(event: MyEvent) {
+    fun onEvent(event: MyAction) {
         viewModelScope.launch {
             when (event) {
-                MyEvent.ChangeText -> changeText()
-                MyEvent.GetHelloWorld -> getHelloWorld()
-                MyEvent.GetLocalString -> getLocalTextString()
-                MyEvent.GetRemoteString -> getTextString()
-                MyEvent.ClickNavigateButton -> {
+                MyAction.ChangeText -> changeText()
+                MyAction.GetHelloWorld -> getHelloWorld()
+                MyAction.GetLocalString -> getLocalTextString()
+                is MyAction.GetRemoteString -> getTextString(event.text)
+                MyAction.ClickNavigateButton -> {
                     _effectChannel.send(MyEffect.NavigateToB)
                 }
             }
@@ -79,8 +79,8 @@ class MyViewModel(
         }
     }
 
-    private suspend fun getTextString() {
-        val result = exampleOperationUseCase.getExampleProcessText()
+    private suspend fun getTextString(text: String) {
+        val result = exampleOperationUseCase.getExampleProcessText(text)
         _state.update {
             it.copy(
                 exampleNetText = result
@@ -107,10 +107,10 @@ sealed class MyEffect {
     data object NavigateToB : MyEffect()
 }
 
-sealed interface MyEvent {
-    data object GetHelloWorld : MyEvent
-    data object GetLocalString : MyEvent
-    data object GetRemoteString : MyEvent
-    data object ChangeText : MyEvent
-    data object ClickNavigateButton : MyEvent
+sealed interface MyAction {
+    data object GetHelloWorld : MyAction
+    data object GetLocalString : MyAction
+    data class GetRemoteString(val text: String) : MyAction
+    data object ChangeText : MyAction
+    data object ClickNavigateButton : MyAction
 }

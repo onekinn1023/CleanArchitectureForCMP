@@ -4,15 +4,17 @@ plugins {
     alias(libs.plugins.compose.compiler)
     id("com.example.app.kotlinModuleConvention")
     id("com.example.app.kmpConventionLibrary")
-    id("com.example.app.kmpKtorConvention")
     id("com.example.app.kmpKoinConvention")
     alias(libs.plugins.ksp)
 }
 
 kotlin {
+
     sourceSets {
         commonMain.dependencies {
             //put your multiplatform dependencies here
+            implementation(project(":core"))
+            implementation(project(":network"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -26,5 +28,5 @@ ksp {
 }
 
 android {
-    namespace = "com.example.core"
+    namespace = "com.example.filesystem"
 }

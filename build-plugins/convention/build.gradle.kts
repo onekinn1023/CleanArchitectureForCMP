@@ -28,5 +28,9 @@ gradlePlugin {
             id = "com.example.app.kotlinModuleConvention"
             implementationClass = "com.example.app.convention.KotlinModuleConventionPlugin"
         }
+        register("kmpKtor") {
+            id = "com.example.app.kmpKtorConvention"
+            implementationClass = "com.example.app.convention.KMPKtorPlugin"
+        }
     }
 }
