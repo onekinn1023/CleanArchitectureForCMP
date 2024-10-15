@@ -1,23 +1,21 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package example.presentation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -86,9 +84,10 @@ fun DemoScreen(
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(25.dp))
-        DemoRemoteOperationText(
-            onAction = { onAction(MyAction.GetRemoteString(it)) },
-            text = state.exampleNetText
+        DemoRequestApiOperation(
+            modifier = Modifier.fillMaxWidth(),
+            queriedText = state.exampleNetText,
+            onSearch = { onAction(MyAction.GetRemoteString(it)) }
         )
         Spacer(modifier = Modifier.height(10.dp))
         DemoButtonText(
@@ -142,35 +141,25 @@ fun DemoButtonText(
 }
 
 @Composable
-fun DemoRemoteOperationText(
-    onAction: (String) -> Unit = {},
-    text: String,
-    modifier: Modifier = Modifier
+fun DemoRequestApiOperation(
+    modifier: Modifier = Modifier,
+    queriedText: String,
+    onSearch: (String) -> Unit = {},
 ) {
-
-    var query by remember {
-        mutableStateOf("test")
-    }
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-
-        TextField(
-            value = query,
-            onValueChange = {
-               query = it
-            },
-            modifier = Modifier.padding(horizontal = 30.dp)
+        CustomSearchView(
+            modifier = Modifier.fillMaxWidth(),
+            onSearch = onSearch
         )
-        Button(
-            onClick = {
-                onAction(query)
-            }
-        ) {
-            Text(text = "Request the test api")
-        }
-        Text(text = text)
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(
+            text = queriedText,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }

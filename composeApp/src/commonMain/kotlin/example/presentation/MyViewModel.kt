@@ -69,7 +69,7 @@ class MyViewModel(
                 isLoading = true
             )
         }
-        val default =  repository.helloWorld()
+        val default = repository.helloWorld()
         delay(3000L)
         _state.update {
             it.copy(
