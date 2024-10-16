@@ -1,4 +1,4 @@
-package example
+package com.example.core.utils
 
 
 @Target(AnnotationTarget.FUNCTION)

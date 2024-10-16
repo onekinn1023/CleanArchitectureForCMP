@@ -1,18 +1,14 @@
 package example.presentation
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core.presentation.PresentationDataStore
 import example.data.MyRepository
 import example.domain.ExampleOperationUseCase
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
@@ -20,18 +16,14 @@ import org.koin.android.annotation.KoinViewModel
 class MyViewModel(
     private val repository: MyRepository,
     private val exampleOperationUseCase: ExampleOperationUseCase
-) : ViewModel() {
-
-    private val _effectChannel = Channel<MyEffect>()
-    val effect = _effectChannel.receiveAsFlow()
-
+) : PresentationDataStore<MyAction, MyState, MyEvent>(
+    initialState = { MyState() }
+) {
     private val _localStringFlow = exampleOperationUseCase.exampleUseCaseFlow
 
-    private val _state = MutableStateFlow(MyState())
-
-    val state = combine(
+    val myState = combine(
         _localStringFlow,
-        _state,
+        state,
     ) { str, state ->
         state.copy(
             exampleLocalText = str,
@@ -42,36 +34,36 @@ class MyViewModel(
          *  b. 如果在viewModel的init初始化会导致进行Test时不可控
          *  c. 因此可以利用flow的onStart
          * */
-        onEvent(MyAction.GetHelloWorld)
+        onAction(MyAction.GetHelloWorld)
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000L), //只有默认设置5s才可以避免屏幕旋转时重新收集flow从而达到即时旋转状态也能稳定
         MyState()
     )
 
-    fun onEvent(event: MyAction) {
+    override fun onAction(action: MyAction) {
         viewModelScope.launch {
-            when (event) {
+            when (action) {
                 MyAction.ChangeText -> changeText()
                 MyAction.GetHelloWorld -> getHelloWorld()
                 MyAction.GetLocalString -> getLocalTextString()
-                is MyAction.GetRemoteString -> getTextString(event.text)
+                is MyAction.GetRemoteString -> getTextString(action.text)
                 MyAction.ClickNavigateButton -> {
-                    _effectChannel.send(MyEffect.NavigateToB)
+                    send(MyEvent.NavigateToB)
                 }
             }
         }
     }
 
     private suspend fun getHelloWorld() {
-        _state.update {
+        setState {
             it.copy(
                 isLoading = true
             )
         }
         val default = repository.helloWorld()
         delay(3000L)
-        _state.update {
+        setState {
             it.copy(
                 initialText = default,
                 isLoading = false
@@ -81,7 +73,7 @@ class MyViewModel(
 
     private suspend fun getTextString(text: String) {
         val result = exampleOperationUseCase.getExampleProcessText(text)
-        _state.update {
+        setState {
             it.copy(
                 exampleNetText = result
             )
@@ -90,7 +82,7 @@ class MyViewModel(
 
     private suspend fun getLocalTextString() {
         val result = exampleOperationUseCase.getExampleLocalText()
-        _state.update {
+        setState {
             it.copy(
                 exampleLocalText = result
             )
@@ -102,9 +94,16 @@ class MyViewModel(
     }
 }
 
-sealed class MyEffect {
-    data object Effect1 : MyEffect()
-    data object NavigateToB : MyEffect()
+data class MyState(
+    val initialText: String = "",
+    val exampleNetText: String = "",
+    val exampleLocalText: String = "",
+    val isLoading: Boolean = false
+)
+
+sealed class MyEvent {
+    data object FirstEvent : MyEvent()
+    data object NavigateToB : MyEvent()
 }
 
 sealed interface MyAction {

@@ -21,7 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import example.MessageDescription
+import com.example.core.utils.MessageDescription
 
 @Composable
 @MessageDescription(message = "It will throw unsolved text2 error while using BasicTextField2")

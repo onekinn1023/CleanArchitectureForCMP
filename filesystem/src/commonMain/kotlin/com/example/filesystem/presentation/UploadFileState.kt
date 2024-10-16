@@ -1,4 +1,4 @@
-package com.example.core.filesystem.presentation
+package com.example.filesystem.presentation
 
 import io.github.vinceglb.filekit.core.PlatformFile
 
@@ -9,13 +9,13 @@ data class UploadState(
     val errorMessage: String? = null
 )
 
-sealed interface FileOperationEvent {
-    data class UploadFile(val contentUri: String): FileOperationEvent
-    data object CancelUpload: FileOperationEvent
-    data object SelectFile: FileOperationEvent
-    data class UploadFileInfo(val platformFile: PlatformFile): FileOperationEvent
+sealed interface FileOperationAction {
+    data class UploadFile(val contentUri: String): FileOperationAction
+    data object CancelUpload: FileOperationAction
+    data object SelectFile: FileOperationAction
+    data class UploadFileInfo(val platformFile: PlatformFile): FileOperationAction
 }
 
-sealed class FileOperationEffect {
-    data object SelectFile: FileOperationEffect()
+sealed class FileOperationEvent {
+    data object SelectFile: FileOperationEvent()
 }

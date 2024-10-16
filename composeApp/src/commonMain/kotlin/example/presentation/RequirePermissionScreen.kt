@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.icerock.moko.permissions.PermissionState
@@ -20,8 +21,9 @@ fun RequirePermissionScreen(modifier: Modifier = Modifier, controller: Permissio
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val viewModel = koinViewModel<PermissionViewModel>()
-        val state = viewModel.state
-        when (state) {
+        val state = viewModel.state.collectAsState()
+
+        when (state.value) {
             PermissionState.Granted -> {
                 Text("Record audio permission granted!")
             }
