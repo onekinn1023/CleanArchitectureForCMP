@@ -1,13 +1,7 @@
 package com.example.filesystem.presentation
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.filesystem.presentation.FileOperationEffect
-import com.example.core.filesystem.presentation.FileOperationEvent
-import com.example.core.filesystem.presentation.UploadState
+import com.example.core.presentation.PresentationDataStore
 import com.example.filesystem.domain.UploadFileUseCase
 import com.example.network.data.FileInfo
 import io.github.aakira.napier.Napier
@@ -16,13 +10,11 @@ import io.github.vinceglb.filekit.core.baseName
 import io.github.vinceglb.filekit.core.extension
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import okio.FileNotFoundException
 import org.koin.android.annotation.KoinViewModel
@@ -30,28 +22,24 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class FileSystemViewModel(
     private val uploadFileUseCase: UploadFileUseCase
-) : ViewModel() {
-
-    var uploadState by mutableStateOf(UploadState())
-        private set
-
-    private val _effectChannel = Channel<FileOperationEffect>{}
-    val effect = _effectChannel.receiveAsFlow()
+) : PresentationDataStore<FileOperationAction, UploadState, FileOperationEvent>(
+    initialState = { UploadState() }
+) {
 
     private var uploadJob: Job? = null
 
-    fun onEvent(event: FileOperationEvent) {
-        when (event) {
-            FileOperationEvent.CancelUpload -> cancelUploadJob()
-            FileOperationEvent.SelectFile -> selectFile()
-            is FileOperationEvent.UploadFileInfo -> uploadFile(event.platformFile)
-            is FileOperationEvent.UploadFile -> TODO()
+    override fun onAction(action: FileOperationAction) {
+        when (action) {
+            FileOperationAction.CancelUpload -> cancelUploadJob()
+            FileOperationAction.SelectFile -> selectFile()
+            is FileOperationAction.UploadFileInfo -> uploadFile(action.platformFile)
+            is FileOperationAction.UploadFile -> TODO()
         }
     }
 
     private fun selectFile() {
         viewModelScope.launch {
-            _effectChannel.send(FileOperationEffect.SelectFile)
+            send(FileOperationEvent.SelectFile)
         }
     }
 
@@ -65,28 +53,37 @@ class FileSystemViewModel(
             Napier.d("Get file with $info")
             uploadJob = uploadFileUseCase(info)
                 .onStart {
-                    uploadState = uploadState.copy(
-                        isUploading = true
-                    )
+                    setState {
+                        it.copy(
+                            isUploading = true
+                        )
+                    }
                 }
-                .onEach {
-                    uploadState = uploadState.copy(
-                        progress = it.byteSent / it.totalBytes.toFloat()
-                    )
+                .onEach { progress ->
+                    setState {
+                        it.copy(
+                            progress = progress.byteSent / progress.totalBytes.toFloat()
+
+                        )
+                    }
                 }
                 .onCompletion { cause ->
                     if (cause == null) {
-                        uploadState = uploadState.copy(
-                            isUploading = false,
-                            isUploadComplete = true
-                        )
+                        setState {
+                            it.copy(
+                                isUploading = false,
+                                isUploadComplete = true
+                            )
+                        }
                     } else if (cause is CancellationException) {
-                        uploadState = uploadState.copy(
-                            isUploading = false,
-                            isUploadComplete = true,
-                            errorMessage = "The upload job is cancelled!",
-                            progress = 0f
-                        )
+                        setState {
+                            it.copy(
+                                isUploading = false,
+                                isUploadComplete = true,
+                                errorMessage = "The upload job is cancelled!",
+                                progress = 0f
+                            )
+                        }
                     }
                 }
                 .catch { cause ->
@@ -95,11 +92,13 @@ class FileSystemViewModel(
                         is FileNotFoundException -> "File not found!"
                         else -> "Something went wrong!"
                     }
-                    uploadState = uploadState.copy(
-                        isUploading = false,
-                        isUploadComplete = true,
-                        errorMessage = message
-                    )
+                    setState {
+                        it.copy(
+                            isUploading = false,
+                            isUploadComplete = true,
+                            errorMessage = message
+                        )
+                    }
                 }
                 .launchIn(viewModelScope)
         }

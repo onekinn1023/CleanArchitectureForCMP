@@ -14,15 +14,17 @@ import androidx.compose.material.Button
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.core.common.ObserveAsEvent
-import com.example.core.filesystem.presentation.FileOperationEffect
-import com.example.core.filesystem.presentation.FileOperationEvent
-import com.example.core.filesystem.presentation.UploadState
+import com.example.filesystem.presentation.FileOperationEvent
+import com.example.filesystem.presentation.FileOperationAction
+import com.example.filesystem.presentation.UploadState
 import com.example.filesystem.presentation.FileSystemViewModel
 import decompose.UploadFileScreenComponent
 import io.github.aakira.napier.Napier
@@ -35,15 +37,15 @@ fun FileUploadScreen(
     uploadFileScreenComponent: UploadFileScreenComponent
 ) {
     val viewModel = koinViewModel<FileSystemViewModel>()
-    val state = viewModel.uploadState
+    val state by viewModel.state.collectAsState()
     val filePicker = rememberFilePickerLauncher { file ->
         file?.let {
-            viewModel.onEvent(FileOperationEvent.UploadFileInfo(it))
+            viewModel.onAction(FileOperationAction.UploadFileInfo(it))
         }
     }
-    ObserveAsEvent(viewModel.effect) {
+    ObserveAsEvent(viewModel.event) {
         when (it) {
-            FileOperationEffect.SelectFile -> {
+            FileOperationEvent.SelectFile -> {
                 filePicker.launch()
             }
         }
@@ -54,7 +56,7 @@ fun FileUploadScreen(
     ) {
         if (!state.isUploading) {
             SelectFileScreen(
-                selectAction = {  viewModel.onEvent(FileOperationEvent.SelectFile) },
+                selectAction = {  viewModel.onAction(FileOperationAction.SelectFile) },
                 backPressed = { uploadFileScreenComponent.backPressed() }
             )
         } else {

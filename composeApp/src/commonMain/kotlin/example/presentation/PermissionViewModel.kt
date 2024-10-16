@@ -1,10 +1,7 @@
 package example.presentation
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core.presentation.PresentationDataStore
 import dev.icerock.moko.permissions.DeniedAlwaysException
 import dev.icerock.moko.permissions.DeniedException
 import dev.icerock.moko.permissions.Permission
@@ -15,11 +12,12 @@ import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class PermissionViewModel: ViewModel() {
-
-    var state by mutableStateOf(PermissionState.NotDetermined)
-        private set
-
+class PermissionViewModel : PresentationDataStore<Unit, PermissionState, Unit>(
+    initialState = { PermissionState.NotDetermined }
+) {
+    override fun onAction(action: Unit) {
+        TODO("Not yet implemented")
+    }
 
     fun provideOrRequestRecordAudioPermission(
         controller: PermissionsController
@@ -27,11 +25,11 @@ class PermissionViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 controller.providePermission(Permission.RECORD_AUDIO)
-                state = PermissionState.Granted
+                setState { PermissionState.Granted }
             } catch (e: DeniedAlwaysException) {
-                state = PermissionState.DeniedAlways
+                setState { PermissionState.DeniedAlways }
             } catch (e: DeniedException) {
-                state = PermissionState.Denied
+                setState { PermissionState.Denied }
             } catch (e: RequestCanceledException) {
                 e.printStackTrace()
             }

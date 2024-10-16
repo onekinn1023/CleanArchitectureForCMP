@@ -1,4 +1,4 @@
-package utils
+package com.example.core.utils
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone

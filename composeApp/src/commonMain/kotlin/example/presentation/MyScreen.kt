@@ -32,14 +32,14 @@ fun MyScreen(
     isDecomposeTheme: Boolean = false
 ) {
     val viewModel = koinViewModel<MyViewModel>()
-    val state by viewModel.state.collectAsState()
-    ObserveAsEvent(viewModel.effect) {
+    val state by viewModel.myState.collectAsState()
+    ObserveAsEvent(viewModel.event) {
         when (it) {
-            MyEffect.Effect1 -> {
+            MyEvent.FirstEvent -> {
                 println("Effect 1")
             }
 
-            MyEffect.NavigateToB -> {
+            MyEvent.NavigateToB -> {
                 myScreenComponent?.onAction(
                     MyScreenComponent.MyScreenAction.NavigateToNext(
                         state.exampleLocalText
@@ -58,7 +58,7 @@ fun MyScreen(
             DemoScreen(
                 modifier = Modifier.fillMaxSize(),
                 state = state,
-                onAction = viewModel::onEvent,
+                onAction = viewModel::onAction,
                 isDecomposeTheme = isDecomposeTheme
             )
         }
