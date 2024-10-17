@@ -8,7 +8,7 @@ import com.example.core.common.DispatcherProvider
 import com.example.core.common.LocalError
 import com.example.core.common.Result
 import com.example.core.common.SchedulePort
-import dataStore.local.DataStoreFactory
+import com.example.datastore.DataStoreFactory
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
