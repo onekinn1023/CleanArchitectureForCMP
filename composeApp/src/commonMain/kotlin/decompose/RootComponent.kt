@@ -7,7 +7,6 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.popTo
 import com.arkivanov.decompose.router.stack.push
-import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
 

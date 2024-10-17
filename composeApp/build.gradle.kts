@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     id("com.example.app.kotlinMultiplatform")
+    id("com.example.app.kmpConventionLibrary")
+    id("com.example.app.kmpKtorConvention")
     id("com.example.app.kmpKoinConvention")
     alias(libs.plugins.ksp)
 }
@@ -30,6 +32,7 @@ kotlin {
             implementation(project(":core"))
             implementation(project(":network"))
             implementation(project(":filesystem"))
+            implementation(project(":datastore"))
         }
     }
 }
