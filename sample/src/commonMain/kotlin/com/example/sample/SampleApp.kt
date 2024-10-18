@@ -14,6 +14,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.example.sample.navigation.RootComponent
 import com.example.sample.presentation.FileUploadScreen
+import com.example.sample.presentation.MyScreen
 import com.example.sample.presentation.RequirePermissionScreen
 import com.example.sample.presentation.ScreenB
 import dev.icerock.moko.permissions.PermissionsController
@@ -38,11 +39,11 @@ fun SampleApp(
             ) {
                 when (val child = it.instance) {
                     is RootComponent.Child.MyScreen -> {
-//                        MyScreen(
-//                            modifier = Modifier,
-//                            myScreenComponent = child.myScreenComponent,
-//                            isDecomposeTheme = true
-//                        )
+                        MyScreen(
+                            modifier = Modifier,
+                            myScreenComponent = child.myScreenComponent,
+                            isDecomposeTheme = true
+                        )
                     }
 
                     is RootComponent.Child.ScreenB -> {

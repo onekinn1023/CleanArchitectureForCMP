@@ -1,9 +1,9 @@
-package example.presentation
+package com.example.sample.presentation.viewmodels
 
 import androidx.lifecycle.viewModelScope
 import com.example.core.presentation.PresentationDataStore
-import example.data.MyRepository
-import example.domain.ExampleOperationUseCase
+import com.example.sample.data.MyExampleRepository
+import com.example.sample.domain.MyExampleOperationUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -14,8 +14,8 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class MyViewModel(
-    private val repository: MyRepository,
-    private val exampleOperationUseCase: ExampleOperationUseCase
+    private val repository: MyExampleRepository,
+    private val exampleOperationUseCase: MyExampleOperationUseCase
 ) : PresentationDataStore<MyAction, MyState, MyEvent>(
     initialState = { MyState() }
 ) {

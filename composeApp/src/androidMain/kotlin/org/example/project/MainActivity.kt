@@ -1,6 +1,5 @@
 package org.example.project
 
-import App
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,8 +8,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.arkivanov.decompose.retainedComponent
-import decompose.DecomposeMaterialApp
-import decompose.RootComponent
+import com.example.sample.SampleApp
+import com.example.sample.navigation.RootComponent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -33,8 +32,7 @@ class MainActivity : ComponentActivity() {
             rootComponentFactory(it)
         }
         setContent {
-//            App()
-            DecomposeMaterialApp(rootComponent = rootComponent)
+            SampleApp(rootComponent = rootComponent)
         }
     }
 }
@@ -42,5 +40,4 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun AppAndroidPreview() {
-    App()
 }

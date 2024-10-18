@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.example.core.common.ObserveAsEvent
 import com.example.filesystem.presentation.FileOperationEvent
 import com.example.filesystem.presentation.FileOperationAction
-import com.example.filesystem.presentation.UploadState
 import com.example.filesystem.presentation.FileSystemViewModel
 import com.example.sample.navigation.UploadFileScreenComponent
 import com.example.sample.presentation.components.ProgressIndicatorComponent
