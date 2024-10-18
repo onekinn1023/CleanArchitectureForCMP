@@ -1,4 +1,4 @@
-package example.presentation
+package com.example.sample.presentation.viewmodels
 
 import androidx.lifecycle.viewModelScope
 import com.example.core.presentation.PresentationDataStore

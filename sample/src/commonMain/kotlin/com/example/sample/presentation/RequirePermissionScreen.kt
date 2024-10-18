@@ -1,4 +1,4 @@
-package example.presentation
+package com.example.sample.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.sample.presentation.viewmodels.PermissionViewModel
 import dev.icerock.moko.permissions.PermissionState
 import dev.icerock.moko.permissions.PermissionsController
 import org.koin.compose.viewmodel.koinViewModel

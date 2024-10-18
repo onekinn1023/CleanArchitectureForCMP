@@ -1,4 +1,4 @@
-package decompose
+package com.example.sample.navigation
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.DefaultComponentContext

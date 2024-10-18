@@ -1,4 +1,4 @@
-package example.domain
+package com.example.sample.domain
 
 import com.example.core.common.getOrThrow
 import com.example.core.common.map
@@ -6,14 +6,14 @@ import com.example.core.common.onError
 import com.example.core.common.onSuccess
 import com.example.network.data.FileWordRepository
 import com.example.network.domain.CensoredText
-import example.data.local.ExampleLocalRepository
+import com.example.sample.data.MyExampleRepository
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.annotation.Single
 
 @Single
-class ExampleOperationUseCase(
-    private val exampleLocalRepository: ExampleLocalRepository,
+class MyExampleOperationUseCase(
+    private val exampleLocalRepository: MyExampleRepository,
     private val fileWordRepository: FileWordRepository,
 ) {
 

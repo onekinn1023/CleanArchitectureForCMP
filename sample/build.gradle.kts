@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.kotlin.serialization)
-    id("com.example.app.kotlinMultiplatform")
+    alias(libs.plugins.jetbrainsCompose)
+    id("com.example.app.kotlinModuleConvention")
+    id("com.example.app.kmpConventionLibrary")
+    id("com.example.app.kmpKtorConvention")
     id("com.example.app.kmpKoinConvention")
     alias(libs.plugins.ksp)
 }
@@ -24,13 +25,15 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
-            implementation(libs.bundles.decompose)
+            implementation(libs.navigation.compose)
 
             implementation(project(":core"))
             implementation(project(":network"))
             implementation(project(":filesystem"))
             implementation(project(":datastore"))
-            implementation(project(":sample"))
+        }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
     }
 }
@@ -41,20 +44,5 @@ ksp {
 }
 
 android {
-    namespace = "org.example.project"
-
-    defaultConfig {
-        applicationId = "org.example.project"
-        versionCode = 1
-        versionName = "1.0"
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
-
-    dependencies {
-        debugImplementation(compose.uiTooling)
-    }
+    namespace = "com.example.sample"
 }

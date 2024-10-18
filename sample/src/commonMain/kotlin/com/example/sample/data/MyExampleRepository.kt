@@ -1,4 +1,4 @@
-package example.data.local
+package com.example.sample.data
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -16,7 +16,9 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-interface ExampleLocalRepository {
+interface MyExampleRepository {
+
+    fun helloWorld(): String
 
     val exampleTextFlow: Flow<String>
 
@@ -25,9 +27,9 @@ interface ExampleLocalRepository {
     suspend fun changeTheLocalData(): Result<Unit, LocalError>
 }
 
-class ExampleLocalRepositoryImpl(
+class MyExampleRepositoryImpl(
     private val dispatcherProvider: DispatcherProvider
-) : ExampleLocalRepository, SchedulePort(), KoinComponent {
+) : MyExampleRepository, SchedulePort(), KoinComponent {
 
     override val scheduler: CoroutineDispatcher
         get() = dispatcherProvider.io
@@ -37,6 +39,10 @@ class ExampleLocalRepositoryImpl(
     private val db: DataStore<Preferences> by lazy { dataStoreFactory.createExampleDataStore() }
 
     private val exampleKey = stringPreferencesKey(EXAMPLE_KEY)
+
+    override fun helloWorld(): String {
+        return "Hello World!"
+    }
 
     override val exampleTextFlow: Flow<String> = db.data.map { it[exampleKey] ?: "This test" }
 

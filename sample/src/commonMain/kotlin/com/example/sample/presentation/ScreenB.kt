@@ -1,4 +1,4 @@
-package decompose
+package com.example.sample.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.example.sample.navigation.ScreenBComponent
 
 @Composable
 fun ScreenB(modifier: Modifier = Modifier, screenBComponent: ScreenBComponent) {

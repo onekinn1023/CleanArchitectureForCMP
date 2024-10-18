@@ -5,8 +5,7 @@ import com.example.core.utils.initNapierLog
 import com.example.datastore.di.datastoreModule
 import com.example.filesystem.di.FileSystemModule
 import com.example.network.di.NetworkModule
-import decompose.di.DecomposeModule
-import example.di.ExampleModule
+import com.example.sample.di.MyExampleModule
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
@@ -24,8 +23,7 @@ fun initKoin(
             NetworkModule().module,
             FileSystemModule().module,
             datastoreModule(),
-            ExampleModule().module,
-            DecomposeModule().module,
+            MyExampleModule().module,
         )
     }
 }

@@ -1,16 +1,15 @@
-package decompose.di
+package com.example.sample.navigation.di
 
-import decompose.AppRootComponent
-import decompose.DefaultMyScreenComponent
-import decompose.DefaultScreenBComponent
-import decompose.DefaultUploadFileScreenComponent
-import decompose.MyScreenComponent
-import decompose.RootComponent
-import decompose.ScreenBComponent
-import decompose.UploadFileScreenComponent
+import com.example.sample.navigation.AppRootComponent
+import com.example.sample.navigation.DefaultMyScreenComponent
+import com.example.sample.navigation.DefaultScreenBComponent
+import com.example.sample.navigation.DefaultUploadFileScreenComponent
+import com.example.sample.navigation.MyScreenComponent
+import com.example.sample.navigation.RootComponent
+import com.example.sample.navigation.ScreenBComponent
+import com.example.sample.navigation.UploadFileScreenComponent
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
-import org.koin.dsl.module
 
 @Module
 class DecomposeModule {

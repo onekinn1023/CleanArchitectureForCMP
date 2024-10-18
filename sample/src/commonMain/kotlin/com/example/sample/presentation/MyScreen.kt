@@ -1,8 +1,5 @@
-@file:OptIn(ExperimentalFoundationApi::class)
+package com.example.sample.presentation
 
-package example.presentation
-
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,7 +19,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.core.common.ObserveAsEvent
-import decompose.MyScreenComponent
+import com.example.core.presentation.components.CustomSearchView
+import com.example.sample.navigation.MyScreenComponent
+import com.example.sample.presentation.viewmodels.MyAction
+import com.example.sample.presentation.viewmodels.MyEvent
+import com.example.sample.presentation.viewmodels.MyState
+import com.example.sample.presentation.viewmodels.MyViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

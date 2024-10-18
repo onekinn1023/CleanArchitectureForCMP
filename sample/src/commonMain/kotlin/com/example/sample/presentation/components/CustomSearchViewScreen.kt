@@ -1,4 +1,4 @@
-package example.presentation
+package com.example.core.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
