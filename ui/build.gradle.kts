@@ -4,10 +4,6 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.jetbrainsCompose)
     id("com.example.app.kotlinModuleConvention")
-    id("com.example.app.kmpConventionLibrary")
-    id("com.example.app.kmpKtorConvention")
-    id("com.example.app.kmpKoinConvention")
-    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -31,7 +27,6 @@ kotlin {
             implementation(project(":network"))
             implementation(project(":filesystem"))
             implementation(project(":datastore"))
-            implementation(project(":ui"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -39,11 +34,6 @@ kotlin {
     }
 }
 
-ksp {
-    arg("KOIN_USE_COMPOSE_VIEWMODEL","true")
-    arg("KOIN_CONFIG_CHECK","true")
-}
-
 android {
-    namespace = "com.example.sample"
+    namespace = "com.example.ui"
 }
