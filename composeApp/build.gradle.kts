@@ -12,24 +12,12 @@ plugins {
 kotlin {
     sourceSets {
         androidMain.dependencies {
-            implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.core.splashscreen)
         }
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-
             implementation(libs.bundles.decompose)
 
-            implementation(project(":core"))
-            implementation(project(":network"))
-            implementation(project(":filesystem"))
-            implementation(project(":datastore"))
             implementation(project(":sample"))
         }
     }

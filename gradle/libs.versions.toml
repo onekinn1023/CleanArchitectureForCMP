@@ -98,6 +98,15 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 compose-gradlePlugin = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose-plugin" }
 
+compose-android-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose-plugin"}
+compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-plugin" }
+compose-fundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-plugin"}
+compose-material = { module = "org.jetbrains.compose.material:material", version.ref = "compose-plugin" }
+compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-plugin" }
+compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose-plugin" }
+compose-components-uiToolingPreview = { module = "org.jetbrains.compose.components:components-ui-tooling-preview", version.ref = "compose-plugin"}
+compose-uiTooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "compose-plugin" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -132,4 +141,12 @@ mock-permissions = [
 file-kit = [
     "file-kit-core",
     "file-kit-compoes"
+]
+compose = [
+    "compose-runtime",
+    "compose-fundation",
+    "compose-material",
+    "compose-ui",
+    "compose-components-resources",
+    "compose-components-uiToolingPreview"
 ]

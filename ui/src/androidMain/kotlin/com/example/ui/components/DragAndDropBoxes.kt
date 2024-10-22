@@ -1,5 +1,5 @@
 @file:OptIn(ExperimentalFoundationApi::class)
-package org.example.project
+package com.example.ui.components
 
 import android.content.ClipData
 import android.content.ClipDescription

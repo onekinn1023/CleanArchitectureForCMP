@@ -19,12 +19,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.core.common.ObserveAsEvent
-import com.example.core.presentation.components.CustomSearchView
 import com.example.sample.navigation.MyScreenComponent
 import com.example.sample.presentation.viewmodels.MyAction
 import com.example.sample.presentation.viewmodels.MyEvent
 import com.example.sample.presentation.viewmodels.MyState
 import com.example.sample.presentation.viewmodels.MyViewModel
+import com.example.ui.CustomSearchView
+import com.example.ui.SimpleToolbar
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -50,22 +51,22 @@ fun MyScreen(
             }
         }
     }
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        if (state.isLoading) {
-            CircularProgressIndicator()
-        } else {
-            DemoScreen(
-                modifier = Modifier.fillMaxSize(),
-                state = state,
-                onAction = viewModel::onAction,
-                isDecomposeTheme = isDecomposeTheme
-            )
-        }
-    }
 
+    if (state.isLoading) {
+        Box(
+            modifier = modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+    } else {
+        DemoScreen(
+            modifier = modifier.fillMaxSize(),
+            state = state,
+            onAction = viewModel::onAction,
+            isDecomposeTheme = isDecomposeTheme
+        )
+    }
 }
 
 @Composable
@@ -76,46 +77,53 @@ fun DemoScreen(
     isDecomposeTheme: Boolean
 ) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier
     ) {
-        Text(
-            text = state.initialText,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(25.dp))
-        DemoRequestApiOperation(
-            modifier = Modifier.fillMaxWidth(),
-            queriedText = state.exampleNetText,
-            onSearch = { onAction(MyAction.GetRemoteString(it)) }
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        DemoButtonText(
-            onAction = { onAction(MyAction.GetLocalString) },
-            hint = "Request local text",
-            text = state.exampleLocalText
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(
-            onClick = {
-                onAction(MyAction.ChangeText)
-            }
+        SimpleToolbar(title = "Main Page")
+        Spacer(modifier = Modifier.height(5.dp))
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(text = "Change local text")
-        }
-        if (isDecomposeTheme) {
+            Text(
+                text = state.initialText,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.height(25.dp))
+            DemoRequestApiOperation(
+                modifier = Modifier.fillMaxWidth(),
+                queriedText = state.exampleNetText,
+                onSearch = { onAction(MyAction.GetRemoteString(it)) }
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            DemoButtonText(
+                onAction = { onAction(MyAction.GetLocalString) },
+                hint = "Request local text",
+                text = state.exampleLocalText
+            )
             Spacer(modifier = Modifier.height(10.dp))
             Button(
                 onClick = {
-                    onAction(MyAction.ClickNavigateButton)
+                    onAction(MyAction.ChangeText)
                 }
             ) {
-                Text(text = "Navigate to next screen B!")
+                Text(text = "Change local text")
+            }
+            if (isDecomposeTheme) {
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(
+                    onClick = {
+                        onAction(MyAction.ClickNavigateButton)
+                    }
+                ) {
+                    Text(text = "Navigate to next screen B!")
+                }
             }
         }
     }
+
 }
 
 @Composable
