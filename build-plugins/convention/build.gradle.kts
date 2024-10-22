@@ -32,5 +32,9 @@ gradlePlugin {
             id = "com.example.app.kmpKtorConvention"
             implementationClass = "com.example.app.convention.KMPKtorPlugin"
         }
+        register("compose") {
+            id = "com.example.app.compose"
+            implementationClass = "com.example.app.convention.ComposeConventionPlugin"
+        }
     }
 }
