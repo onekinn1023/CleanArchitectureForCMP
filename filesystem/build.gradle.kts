@@ -16,9 +16,6 @@ kotlin {
             implementation(project(":core"))
             implementation(project(":network"))
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
     }
 }
 

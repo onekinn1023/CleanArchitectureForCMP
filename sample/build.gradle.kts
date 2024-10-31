@@ -25,9 +25,6 @@ kotlin {
             implementation(project(":datastore"))
             implementation(project(":ui"))
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
     }
 }
 

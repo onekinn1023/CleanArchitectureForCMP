@@ -12,9 +12,6 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":core"))
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
     }
 }
 
