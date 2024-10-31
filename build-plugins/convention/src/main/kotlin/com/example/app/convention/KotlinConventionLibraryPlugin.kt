@@ -54,6 +54,7 @@ class KotlinConventionLibraryPlugin : Plugin<Project> {
                         commonTest {
                             dependencies {
                                 implementation(libs.findLibrary("okio-test").get())
+                                implementation(libs.findLibrary("kotlin-test").get())
                             }
                         }
                     }
