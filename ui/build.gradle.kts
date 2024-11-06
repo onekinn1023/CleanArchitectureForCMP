@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.compose.compiler)
-    id("com.example.app.kotlinModuleConvention")
-    id("com.example.app.compose")
+    alias(libs.plugins.cmp.kotlin.multiplatform.module)
+    alias(libs.plugins.cmp.compose.plugin)
 }
 
 kotlin {

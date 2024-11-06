@@ -4,8 +4,8 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    id("com.example.app.kotlinMultiplatform")
-    id("com.example.app.kmpKoinConvention")
+    alias(libs.plugins.cmp.kotlin.multiplatform.application)
+    alias(libs.plugins.cmp.koin.plugin)
     alias(libs.plugins.ksp)
 }
 
@@ -17,7 +17,6 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(libs.bundles.decompose)
-
             implementation(project(":sample"))
         }
     }

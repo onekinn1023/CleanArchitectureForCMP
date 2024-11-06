@@ -12,6 +12,7 @@ dependencies {
 
 gradlePlugin {
     plugins {
+        version = "1.0.0"
         register("kotlinMultiplatform") {
             id = "com.example.app.kotlinMultiplatform"
             implementationClass = "com.example.app.convention.KotlinMultiplatformApplicationPlugin"

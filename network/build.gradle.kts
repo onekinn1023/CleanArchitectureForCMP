@@ -2,10 +2,10 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.compose.compiler)
-    id("com.example.app.kotlinModuleConvention")
-    id("com.example.app.kmpConventionLibrary")
-    id("com.example.app.kmpKoinConvention")
-    id("com.example.app.kmpKtorConvention")
+    alias(libs.plugins.cmp.kotlin.multiplatform.module)
+    alias(libs.plugins.cmp.kotlin.multiplatform.convention.library)
+    alias(libs.plugins.cmp.koin.plugin)
+    alias(libs.plugins.cmp.network.plugin)
     alias(libs.plugins.ksp)
 }
 
