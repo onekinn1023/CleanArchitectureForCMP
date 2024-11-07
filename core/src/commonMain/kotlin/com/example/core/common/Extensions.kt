@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 
 @Composable
 @MessageDescription(message = "Prevent the possible of data lost in sharedFlow when rotate the screen and so on.")
-fun <T> ObserveAsEvent(flow: Flow<T>, onEvent: (T) -> Unit) {
+inline fun <T> ObserveAsEvent(flow: Flow<T>, noinline onEvent: (T) -> Unit) {
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(flow, lifecycleOwner.lifecycle) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

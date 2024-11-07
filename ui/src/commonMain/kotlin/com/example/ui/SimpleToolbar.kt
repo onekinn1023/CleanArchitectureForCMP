@@ -56,7 +56,7 @@ fun SimpleToolbar(
                 fontSize = 30.sp,
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    color = Color.DarkGray
+                    color = primaryLightMediumContrast
                 )
             )
         }
