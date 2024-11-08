@@ -1,9 +1,13 @@
 package com.example.sample.presentation.viewmodels
 
 import androidx.lifecycle.viewModelScope
+import com.example.core.common.onError
+import com.example.core.common.onSuccess
 import com.example.core.presentation.PresentationDataStore
 import com.example.sample.data.MyExampleRepository
-import com.example.sample.domain.MyExampleOperationUseCase
+import com.example.sample.domain.GetCensoredTextUseCase
+import com.example.sample.domain.GetSampleTextFlowUseCase
+import com.example.sample.domain.UpdateSampleTextUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -15,14 +19,15 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class MyViewModel(
     private val repository: MyExampleRepository,
-    private val exampleOperationUseCase: MyExampleOperationUseCase
+    private val updateSampleTextUseCase: UpdateSampleTextUseCase,
+    getSampleTextFlowUseCase: GetSampleTextFlowUseCase,
+    private val getCensoredTextUseCase: GetCensoredTextUseCase
 ) : PresentationDataStore<MyAction, MyState, MyEvent>(
     initialState = { MyState() }
 ) {
-    private val _localStringFlow = exampleOperationUseCase.exampleUseCaseFlow
 
     val myState = combine(
-        _localStringFlow,
+        getSampleTextFlowUseCase(Unit),
         state,
     ) { str, state ->
         state.copy(
@@ -44,10 +49,9 @@ class MyViewModel(
     override fun onAction(action: MyAction) {
         viewModelScope.launch {
             when (action) {
-                MyAction.ChangeText -> changeText()
+                MyAction.ChangeText -> updateSampleTextUseCase(Unit)
                 MyAction.GetHelloWorld -> getHelloWorld()
-                MyAction.GetLocalString -> getLocalTextString()
-                is MyAction.GetRemoteString -> getTextString(action.text)
+                is MyAction.GetRemoteString -> queryCensorText(action.text)
                 MyAction.ClickNavigateButton -> {
                     send(MyEvent.NavigateToB)
                 }
@@ -71,26 +75,16 @@ class MyViewModel(
         }
     }
 
-    private suspend fun getTextString(text: String) {
-        val result = exampleOperationUseCase.getExampleProcessText(text)
-        setState {
-            it.copy(
-                exampleNetText = result
-            )
+    private suspend fun queryCensorText(text: String) {
+        getCensoredTextUseCase(text).onSuccess { result ->
+            setState {
+                it.copy(
+                    exampleNetText = result
+                )
+            }
+        }.onError {
+            // Do some error msg handle to state
         }
-    }
-
-    private suspend fun getLocalTextString() {
-        val result = exampleOperationUseCase.getExampleLocalText()
-        setState {
-            it.copy(
-                exampleLocalText = result
-            )
-        }
-    }
-
-    private suspend fun changeText() {
-        exampleOperationUseCase.changeText()
     }
 }
 
@@ -108,7 +102,6 @@ sealed class MyEvent {
 
 sealed interface MyAction {
     data object GetHelloWorld : MyAction
-    data object GetLocalString : MyAction
     data class GetRemoteString(val text: String) : MyAction
     data object ChangeText : MyAction
     data object ClickNavigateButton : MyAction

@@ -47,4 +47,20 @@ fun <T, E: CommonError> Result<T, E>.getOrThrow(): T {
     }
 }
 
+fun <T, E: CommonError> Result<T, E>.isSuccess(): Boolean {
+    return when (this) {
+        is Result.Error -> false
+        is Result.Success -> true
+    }
+}
+
+fun <T, E: CommonError> Result<T, E>.getOrNull(): T? {
+    return when (this) {
+        is Result.Error -> null
+        is Result.Success -> {
+            this.data
+        }
+    }
+}
+
 typealias EmptyResult<E> = Result<Unit, E>
