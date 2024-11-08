@@ -1,5 +1,6 @@
 package com.example.sample.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -98,11 +100,8 @@ fun DemoScreen(
                 onSearch = { onAction(MyAction.GetRemoteString(it)) }
             )
             Spacer(modifier = Modifier.height(10.dp))
-            DemoButtonText(
-                onAction = { onAction(MyAction.GetLocalString) },
-                hint = "Request local text",
-                text = state.exampleLocalText
-            )
+            Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(color = Color.Black))
+            Text(text = state.exampleLocalText)
             Spacer(modifier = Modifier.height(10.dp))
             Button(
                 onClick = {
@@ -122,30 +121,6 @@ fun DemoScreen(
                 }
             }
         }
-    }
-
-}
-
-@Composable
-fun DemoButtonText(
-    onAction: () -> Unit = {},
-    hint: String,
-    text: String,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Button(
-            onClick = {
-                onAction()
-            }
-        ) {
-            Text(text = hint)
-        }
-        Text(text = text)
     }
 
 }

@@ -35,4 +35,9 @@ abstract class PresentationDataStore<Action, State, Event>(
             newState(it)
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        _event.close()
+    }
 }

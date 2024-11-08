@@ -8,19 +8,19 @@ import kotlinx.coroutines.flow.stateIn
 
 interface DomainError : CommonError
 
-interface UseCaseResultInteractor<in I, out O, E : DomainError> {
-    suspend operator fun invoke(i: I): Result<O, E>
+interface UseCaseResultInteractor<in I, out O, DE : DomainError> {
+    suspend operator fun invoke(i: I): Result<O, DE>
 
-    private inline fun <T, E : CommonError> Result<T, E>.onDomainError(
-        transformError: (E) -> DomainError
-    ): Result<T, DomainError> {
+    fun <T, E : CommonError> Result<T, E>.onDomainError(
+        transformError: (E) -> DE
+    ): Result<T, DE> {
         return when (this) {
             is Result.Error -> {
                 Result.Error(transformError(this.error))
             }
 
             is Result.Success -> {
-                Result.Success(this.data)
+                this
             }
         }
     }
@@ -33,8 +33,8 @@ interface UseCaseFlowInteractor<in I, out O> {
 private fun <I, O> UseCaseFlowInteractor<I, O>.stateIn(
     coroutineScope: CoroutineScope,
     input: I,
-    default: O
+    defaultOut: O
 ): StateFlow<O> {
-    return invoke(input).stateIn(coroutineScope, SharingStarted.Eagerly, default)
+    return invoke(input).stateIn(coroutineScope, SharingStarted.Eagerly, defaultOut)
 }
 
