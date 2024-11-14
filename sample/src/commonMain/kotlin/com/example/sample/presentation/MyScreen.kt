@@ -65,7 +65,7 @@ fun MyScreen(
         DemoScreen(
             modifier = modifier.fillMaxSize(),
             state = state,
-            onAction = viewModel::onAction,
+            onAction = viewModel::dispatch,
             isDecomposeTheme = isDecomposeTheme
         )
     }
