@@ -3,7 +3,7 @@ package com.example.sample.presentation.viewmodels
 import androidx.lifecycle.viewModelScope
 import com.example.core.common.onError
 import com.example.core.common.onSuccess
-import com.example.core.presentation.PresentationDataStore
+import com.example.core.presentation.PresentationEventViewDataStore
 import com.example.sample.data.MyExampleRepository
 import com.example.sample.domain.GetCensoredTextUseCase
 import com.example.sample.domain.GetSampleTextFlowUseCase
@@ -22,9 +22,13 @@ class MyViewModel(
     private val updateSampleTextUseCase: UpdateSampleTextUseCase,
     getSampleTextFlowUseCase: GetSampleTextFlowUseCase,
     private val getCensoredTextUseCase: GetCensoredTextUseCase
-) : PresentationDataStore<MyAction, MyState, MyEvent>(
+) : PresentationEventViewDataStore<MyAction, MyState, MyEvent>(
     initialState = { MyState() }
 ) {
+
+    init {
+        provideActionHandler()
+    }
 
     val myState = combine(
         getSampleTextFlowUseCase(Unit),
@@ -39,21 +43,23 @@ class MyViewModel(
          *  b. 如果在viewModel的init初始化会导致进行Test时不可控
          *  c. 因此可以利用flow的onStart
          * */
-        onAction(MyAction.GetHelloWorld)
+        dispatch(MyAction.GetHelloWorld)
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000L), //只有默认设置5s才可以避免屏幕旋转时重新收集flow从而达到即时旋转状态也能稳定
         MyState()
     )
 
-    override fun onAction(action: MyAction) {
+    private fun provideActionHandler() {
         viewModelScope.launch {
-            when (action) {
-                MyAction.ChangeText -> updateSampleTextUseCase(Unit)
-                MyAction.GetHelloWorld -> getHelloWorld()
-                is MyAction.GetRemoteString -> queryCensorText(action.text)
-                MyAction.ClickNavigateButton -> {
-                    send(MyEvent.NavigateToB)
+            actions.collect { action ->
+                when (action) {
+                    MyAction.ChangeText -> updateSampleTextUseCase(Unit)
+                    MyAction.GetHelloWorld -> getHelloWorld()
+                    is MyAction.GetRemoteString -> queryCensorText(action.text)
+                    MyAction.ClickNavigateButton -> {
+                        send(MyEvent.NavigateToB)
+                    }
                 }
             }
         }

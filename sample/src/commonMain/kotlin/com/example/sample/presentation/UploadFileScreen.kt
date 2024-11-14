@@ -39,9 +39,10 @@ fun FileUploadScreen(
     val state by viewModel.state.collectAsState()
     val filePicker = rememberFilePickerLauncher { file ->
         file?.let {
-            viewModel.onAction(FileOperationAction.UploadFileInfo(it))
+            viewModel.dispatch(FileOperationAction.UploadFileInfo(it))
         }
     }
+
     ObserveAsEvent(viewModel.event) {
         when (it) {
             FileOperationEvent.SelectFile -> {
@@ -49,13 +50,14 @@ fun FileUploadScreen(
             }
         }
     }
+
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         if (!state.isUploading) {
             SelectFileScreen(
-                selectAction = {  viewModel.onAction(FileOperationAction.SelectFile) },
+                selectAction = {  viewModel.dispatch(FileOperationAction.SelectFile) },
                 backPressed = { uploadFileScreenComponent.backPressed() }
             )
         } else {

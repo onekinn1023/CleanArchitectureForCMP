@@ -1,7 +1,7 @@
 package com.example.filesystem.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.example.core.presentation.PresentationDataStore
+import com.example.core.presentation.PresentationEventViewDataStore
 import com.example.filesystem.domain.UploadFileUseCase
 import com.example.network.data.FileInfo
 import io.github.aakira.napier.Napier
@@ -22,18 +22,30 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class FileSystemViewModel(
     private val uploadFileUseCase: UploadFileUseCase
-) : PresentationDataStore<FileOperationAction, UploadState, FileOperationEvent>(
+) : PresentationEventViewDataStore<FileOperationAction, UploadState, FileOperationEvent>(
     initialState = { UploadState() }
 ) {
 
     private var uploadJob: Job? = null
 
-    override fun onAction(action: FileOperationAction) {
-        when (action) {
-            FileOperationAction.CancelUpload -> cancelUploadJob()
-            FileOperationAction.SelectFile -> selectFile()
-            is FileOperationAction.UploadFileInfo -> uploadFile(action.platformFile)
-            is FileOperationAction.UploadFile -> TODO()
+    init {
+        provideActionHandler()
+    }
+
+    private fun provideActionHandler() {
+        viewModelScope.launch {
+            actions.onStart {
+                Napier.d {
+                    "Start observe actions"
+                }
+            }.collect { action ->
+                when (action) {
+                    FileOperationAction.CancelUpload -> cancelUploadJob()
+                    FileOperationAction.SelectFile -> selectFile()
+                    is FileOperationAction.UploadFileInfo -> uploadFile(action.platformFile)
+                    is FileOperationAction.UploadFile -> TODO()
+                }
+            }
         }
     }
 

@@ -1,7 +1,7 @@
 package com.example.sample.presentation.viewmodels
 
 import androidx.lifecycle.viewModelScope
-import com.example.core.presentation.PresentationDataStore
+import com.example.core.presentation.PresentationViewDataStore
 import dev.icerock.moko.permissions.DeniedAlwaysException
 import dev.icerock.moko.permissions.DeniedException
 import dev.icerock.moko.permissions.Permission
@@ -12,13 +12,9 @@ import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class PermissionViewModel : PresentationDataStore<Unit, PermissionState, Unit>(
+class PermissionViewModel : PresentationViewDataStore<Unit, PermissionState>(
     initialState = { PermissionState.NotDetermined }
 ) {
-    override fun onAction(action: Unit) {
-        TODO("Not yet implemented")
-    }
-
     fun provideOrRequestRecordAudioPermission(
         controller: PermissionsController
     ) {
