@@ -1,8 +1,13 @@
 package com.example.network.utils
 
-interface CloudTypeConverter<I, O> {
 
-    fun convertFromDto(dto: I): O
+/**
+ *  Use @GenerateDto ksp instead of  implementing directly
+ */
 
-    fun convertToDto(domain: O): I
+interface CloudTypeConverter<Domain, Dto> {
+
+    fun convertFromDto(dto: Dto): Domain
+
+    fun convertToDto(domain: Domain): Dto
 }

@@ -6,8 +6,6 @@ import com.example.core.common.Result
 import com.example.core.common.SchedulePort
 import com.example.core.common.map
 import com.example.network.domain.CensoredText
-import com.example.network.domain.CensoredTextDto
-import com.example.network.domain.toCensoredText
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.onUpload
 import io.ktor.client.request.forms.formData
@@ -35,9 +33,9 @@ class FileWordRepositoryImpl(
     override val scheduler: CoroutineDispatcher
         get() = dispatcherProvider.default
 
-//    private val censoredTextTypeConverter: CensoredTextTypeConverter by lazy {
-//        CensoredTextTypeConverter()
-//    }
+    private val censoredTextTypeConverter: CensoredTextCloudTypeConverter by lazy {
+        CensoredTextCloudTypeConverter()
+    }
 
     override suspend fun getCensoredText(censoredText: CensoredText): Result<CensoredText, NetworkError> {
         return scheduleCatchingNetwork<CensoredTextDto> {
@@ -47,7 +45,7 @@ class FileWordRepositoryImpl(
                 parameter("text", censoredText.result)
             }
         }.map {
-            it.toCensoredText()
+            censoredTextTypeConverter.convertFromDto(it)
         }
     }
 
