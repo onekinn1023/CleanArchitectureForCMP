@@ -33,8 +33,8 @@ class FileWordRepositoryImpl(
     override val scheduler: CoroutineDispatcher
         get() = dispatcherProvider.default
 
-    private val censoredTextTypeConverter: CensoredTextTypeConverter by lazy {
-        CensoredTextTypeConverter()
+    private val censoredTextTypeConverter: CensoredTextCloudTypeConverter by lazy {
+        CensoredTextCloudTypeConverter()
     }
 
     override suspend fun getCensoredText(censoredText: CensoredText): Result<CensoredText, NetworkError> {
