@@ -8,15 +8,19 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +31,7 @@ import com.example.sample.presentation.viewmodels.MyEvent
 import com.example.sample.presentation.viewmodels.MyState
 import com.example.sample.presentation.viewmodels.MyViewModel
 import com.example.ui.CustomSearchView
+import com.example.ui.OutlinedSearchView
 import com.example.ui.SimpleToolbar
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -131,6 +136,10 @@ fun DemoRequestApiOperation(
     queriedText: String,
     onSearch: (String) -> Unit = {},
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var searchQuery by remember {
+        mutableStateOf("")
+    }
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -139,6 +148,15 @@ fun DemoRequestApiOperation(
         CustomSearchView(
             modifier = Modifier.fillMaxWidth(),
             onSearch = onSearch
+        )
+        OutlinedSearchView(
+            searchQuery = searchQuery,
+            onSearchQueryChange = {
+                searchQuery = it
+            },
+            onImeSearch = {
+                keyboardController?.hide()
+            }
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(

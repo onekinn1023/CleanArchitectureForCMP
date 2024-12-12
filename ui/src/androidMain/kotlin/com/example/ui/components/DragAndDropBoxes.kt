@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalFoundationApi::class)
+
 package com.example.ui.components
 
 import android.content.ClipData
@@ -17,7 +18,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -96,7 +97,7 @@ fun DragAndDropBoxes(modifier: Modifier = Modifier) {
 //                                }
                             ) {
                                 detectTapGestures(
-                                    onLongPress = { offset ->
+                                    onLongPress = { _ ->
                                         startTransfer(
                                             transferData = DragAndDropTransferData(
                                                 clipData = ClipData.newPlainText(
