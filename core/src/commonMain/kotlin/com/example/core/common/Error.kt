@@ -2,7 +2,9 @@ package com.example.core.common
 
 interface CommonError
 
-enum class NetworkError : CommonError {
+sealed interface DataError: CommonError
+
+enum class NetworkError : DataError {
     REQUEST_TIMEOUT,
     UNAUTHORIZED,
     CONFLICT,
@@ -14,7 +16,7 @@ enum class NetworkError : CommonError {
     UNKNOWN;
 }
 
-enum class LocalError: CommonError {
+enum class LocalError: DataError {
     UNKNOWN_ERROR,
     SERIALIZATION_ERROR
 }
