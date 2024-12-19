@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-fun <T : Any> StateFlow<T>.asValue(
+inline fun <reified T : Any> StateFlow<T>.asValue(
     lifecycle: Lifecycle,
     context: CoroutineContext = Dispatchers.Main.immediate,
 ): Value<T> =
@@ -22,7 +22,7 @@ fun <T : Any> StateFlow<T>.asValue(
         context = context,
     )
 
-fun <T : Any> Flow<T>.asValue(
+inline fun <reified T : Any> Flow<T>.asValue(
     initialValue: T,
     lifecycle: Lifecycle,
     context: CoroutineContext = Dispatchers.Main.immediate,

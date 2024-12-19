@@ -10,6 +10,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.navigation.compose)
             //put your multiplatform dependencies here
         }
     }

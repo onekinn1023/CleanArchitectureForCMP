@@ -17,7 +17,7 @@ kotlin = "2.0.20"
 koin = "4.0.0"
 koinComposeMultiplatform = "4.0.0"
 koin-annotations = "1.4.0-RC4"
-navigationCompose = "2.8.0-alpha02"
+navigationCompose = "2.8.0-alpha10"
 lifecycleViewModel = "2.8.6"
 lifecycleViewModelCompose = "2.8.0"
 
