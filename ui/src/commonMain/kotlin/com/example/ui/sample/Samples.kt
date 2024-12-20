@@ -1,4 +1,4 @@
-package com.example.ui
+package com.example.ui.sample
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.ui.ActionIcon
+import com.example.ui.SwiepableItemWithActions
 
 data class SamplesItemState(
     val id: Int,
