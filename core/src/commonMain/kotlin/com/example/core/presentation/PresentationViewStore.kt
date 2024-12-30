@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
@@ -64,11 +65,7 @@ abstract class PresentationEventViewDataStore<Action, State, Event>(
     val actions = _actions.asSharedFlow()
 
     private val _state: MutableStateFlow<State> = MutableStateFlow(initialState())
-    override val state: StateFlow<State> = _state.stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        initialState()
-    )
+    override val state: StateFlow<State> = _state.asStateFlow()
 
     private val emitter = EventEmitter<Event>()
 
