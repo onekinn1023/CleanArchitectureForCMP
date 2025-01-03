@@ -31,7 +31,7 @@ import kotlin.math.roundToInt
  *  @param actions the row with actions
  *  @param content the main item view
  *
- *  @sample com.example.ui.SwipeSample
+ *  @sample com.example.ui.sample.SwipeSample
  *
  **/
 
