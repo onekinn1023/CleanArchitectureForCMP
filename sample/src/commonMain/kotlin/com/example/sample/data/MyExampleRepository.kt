@@ -9,6 +9,7 @@ import com.example.core.common.LocalError
 import com.example.core.common.Result
 import com.example.core.common.SchedulePort
 import com.example.datastore.DataStoreFactory
+import com.example.datastore.data.SampleTextsDataStore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -35,6 +36,7 @@ class MyExampleRepositoryImpl(
         get() = dispatcherProvider.io
 
     private val dataStoreFactory: DataStoreFactory by inject()
+    private val sampleDataStore: SampleTextsDataStore by inject()
 
     private val db: DataStore<Preferences> by lazy { dataStoreFactory.createExampleDataStore() }
 

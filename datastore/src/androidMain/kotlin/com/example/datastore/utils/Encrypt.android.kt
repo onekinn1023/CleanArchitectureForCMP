@@ -61,5 +61,4 @@ actual object Encrypt {
         cipher.init(Cipher.DECRYPT_MODE, getKey(key), IvParameterSpec(iv))
         return cipher.doFinal(data)
     }
-
 }

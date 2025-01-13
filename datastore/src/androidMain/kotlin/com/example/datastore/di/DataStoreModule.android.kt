@@ -8,3 +8,7 @@ import org.koin.dsl.module
 actual fun datastoreModule(): Module = module {
     single { DataStoreFactory(get()) }.bind<DataStoreFactory>()
 }
+
+internal actual fun sharedModule(): Module = module {
+    single { DataStoreFactory(get()) }.bind<DataStoreFactory>()
+}
