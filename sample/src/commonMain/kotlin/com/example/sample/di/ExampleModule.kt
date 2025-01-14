@@ -1,6 +1,9 @@
 package com.example.sample.di
 
 import com.example.core.common.DispatcherProvider
+import com.example.datastore.DataStoreFactory
+import com.example.datastore.data.SampleTextsDataStore
+import com.example.datastore.data.UserTokenDatastore
 import com.example.sample.data.MyExampleRepository
 import com.example.sample.data.MyExampleRepositoryImpl
 import com.example.sample.navigation.di.DecomposeModule

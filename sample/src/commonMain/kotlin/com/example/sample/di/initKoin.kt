@@ -2,7 +2,7 @@ package com.example.sample.di
 
 import com.example.core.di.CoreModule
 import com.example.core.utils.initNapierLog
-import com.example.datastore.di.datastoreModule
+import com.example.datastore.di.dataStoreModule
 import com.example.filesystem.di.FileSystemModule
 import com.example.network.di.NetworkModule
 import org.koin.core.KoinApplication
@@ -17,12 +17,12 @@ fun initKoin(
     initNapierLog(logEnabled)
     return startKoin {
         config?.invoke(this)
-        modules(
+        val modules = dataStoreModule + listOf(
             CoreModule().module,
             NetworkModule().module,
             FileSystemModule().module,
-            datastoreModule(),
-            MyExampleModule().module,
+            MyExampleModule().module
         )
+        modules(modules)
     }
 }

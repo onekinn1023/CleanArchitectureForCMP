@@ -1,8 +1,23 @@
 package com.example.datastore.di
 
+import com.example.datastore.DataStoreFactory
+import com.example.datastore.data.SampleTextsDataStore
+import com.example.datastore.data.UserTokenDatastore
 import org.koin.core.module.Module
+import org.koin.dsl.module
 
-expect fun datastoreModule(): Module
+val dataStoreModule = sharedModule() + module {
+    single<SampleTextsDataStore> {
+        get<DataStoreFactory>()
+            .createSampleDataStore()
+    }
+    single<UserTokenDatastore> {
+        get<DataStoreFactory>()
+            .createTokenDataStore()
+    }
+}
+
+internal expect fun sharedModule(): Module
 
 //@Module
 //@ComponentScan("dataStore.local")

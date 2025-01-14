@@ -39,6 +39,7 @@ class KotlinConventionLibraryPlugin : Plugin<Project> {
                                 implementation(libs.findBundle("decompose").get())
                                 // viewModel
                                 implementation(libs.findLibrary("lifecycle-viewmodel").get())
+                                implementation(libs.findLibrary("kotlinx-serialization-json").get())
                             }
                         }
                         androidMain {
