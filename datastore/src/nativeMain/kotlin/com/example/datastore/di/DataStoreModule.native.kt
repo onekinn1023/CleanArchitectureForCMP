@@ -5,11 +5,6 @@ import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-
-actual fun datastoreModule(): Module = module {
-    singleOf(::DataStoreFactory)
-}
-
 internal actual fun sharedModule(): Module = module {
     singleOf(::DataStoreFactory)
 }

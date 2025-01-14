@@ -12,7 +12,7 @@ class GetSampleTextFlowUseCase(
     private val exampleLocalRepository: MyExampleRepository
 ) : UseCaseFlowInteractor<Unit, String> {
     override fun invoke(i: Unit): Flow<String> {
-        return exampleLocalRepository.exampleTextFlow.onStart {
+        return exampleLocalRepository.sampleTextFlow.onStart {
             Napier.d(
                 tag = "GetSampleTextFlowUseCase",
                 message = "Start collecting..."

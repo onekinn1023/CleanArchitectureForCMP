@@ -9,7 +9,6 @@ import okio.Path.Companion.toPath
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect class DataStoreFactory {
-    fun createExampleDataStore(): DataStore<Preferences>
     fun createTokenDataStore(): UserTokenDatastore
     fun createSampleDataStore(): SampleTextsDataStore
 }

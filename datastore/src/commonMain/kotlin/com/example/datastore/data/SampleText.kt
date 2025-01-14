@@ -3,7 +3,6 @@ package com.example.datastore.data
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.okio.OkioSerializer
 import androidx.datastore.core.okio.OkioStorage
-import com.example.datastore.core.DataStoreIndicator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -69,13 +68,20 @@ class SampleTextsDataStore(
 
     override suspend fun upsert(i: SampleText) {
         db.updateData {
-            it.map { sampleText ->
-                if (sampleText.sampleKey != i.text) {
-                    sampleText
-                } else {
-                    sampleText.copy(
-                        text = i.text
-                    )
+            val hasFound = it.any { texts -> texts.sampleKey == i.sampleKey }
+            if (hasFound) {
+                it.map { sampleText ->
+                    if (sampleText.sampleKey != i.text) {
+                        sampleText
+                    } else {
+                        sampleText.copy(
+                            text = i.text
+                        )
+                    }
+                }
+            } else {
+                it.toMutableList().apply {
+                    add(i)
                 }
             }
         }

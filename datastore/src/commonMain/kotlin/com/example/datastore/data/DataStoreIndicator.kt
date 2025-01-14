@@ -1,8 +1,8 @@
-package com.example.datastore.core
+package com.example.datastore.data
 
 import kotlinx.coroutines.flow.Flow
 
-interface DataStoreIndicator<out T, in I> {
+internal interface DataStoreIndicator<out T, in I> {
 
     val data: Flow<T>
 

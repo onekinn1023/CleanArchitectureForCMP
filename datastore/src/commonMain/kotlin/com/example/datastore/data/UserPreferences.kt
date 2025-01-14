@@ -3,7 +3,6 @@ package com.example.datastore.data
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.okio.OkioSerializer
 import androidx.datastore.core.okio.OkioStorage
-import com.example.datastore.core.DataStoreIndicator
 import com.example.datastore.utils.Encrypt
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable

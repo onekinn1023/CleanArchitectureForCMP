@@ -1,14 +1,7 @@
 package com.example.datastore
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import com.example.datastore.core.DataStoreIndicator
-import com.example.datastore.data.SampleText
-import com.example.datastore.data.SampleTexts
 import com.example.datastore.data.SampleTextsDataStore
-import com.example.datastore.data.UserPreferences
 import com.example.datastore.data.UserTokenDatastore
-import com.example.datastore.data.UserTokens
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
@@ -27,20 +20,8 @@ private fun fileDirectory(): String {
     return requireNotNull(documentDirectory).path!!
 }
 
-//actual fun createDataStore(): DataStore<Preferences> {
-//    return commonCreateDataStore {
-//        fileDirectory() + "/$DATA_STORE_FILE_NAME"
-//    }
-//}
-
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class DataStoreFactory {
-    actual fun createExampleDataStore(): DataStore<Preferences> {
-        return commonCreateDataStore {
-            fileDirectory() + "/$DATA_STORE_FILE_NAME"
-        }
-    }
-
     actual fun createTokenDataStore(): UserTokenDatastore {
         return UserTokenDatastore {
             "${fileDirectory()}/user_token.json"
