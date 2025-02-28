@@ -12,6 +12,7 @@ import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import io.ktor.client.statement.content
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import kotlinx.coroutines.CoroutineDispatcher
@@ -65,8 +66,10 @@ class FileWordRepositoryImpl(
             }
         ) {
             onUpload { bytesSentTotal, contentLength ->
-                if (contentLength > 0L) {
-                    send(ProgressUpdate(bytesSentTotal, contentLength))
+                if (contentLength != null) {
+                    if (contentLength > 0L) {
+                        send(ProgressUpdate(bytesSentTotal, contentLength))
+                    }
                 }
             }
         }
