@@ -18,10 +18,13 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -37,16 +40,21 @@ val defaultColor = Color(0x66ffffff)
 fun TabBoxAnimation(
     modifier: Modifier = Modifier
 ) {
+    var score by remember {
+        mutableIntStateOf(0)
+    }
     Box(
         modifier = modifier.fillMaxSize(),
     ) {
         MainBoxSurface(
             modifier = Modifier.fillMaxSize(),
         ) {
-            RowBox()
+            RowBox {
+                score ++
+            }
         }
         Text(
-            text = "Score",
+            text = "Score is $score",
             modifier = Modifier
                 .padding(15.dp)
                 .align(
@@ -103,6 +111,13 @@ fun RowBox(
         horizontalArrangement = Arrangement.Center
     ) {
         repeat(4) { index ->
+            var color by remember {
+                mutableStateOf(
+                    if (index == randomIndex) {
+                        borderColor
+                    } else defaultColor
+                )
+            }
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -112,12 +127,13 @@ fun RowBox(
                         color = borderColor
                     )
                     .background(
-                        color = if (index == randomIndex) {
-                            borderColor
-                        } else defaultColor
+                        color = color
                     )
-                    .clickable {
+                    .clickable(
+                        enabled = color != defaultColor
+                    ) {
                         onClick()
+                        color = defaultColor
                     }
             )
         }
