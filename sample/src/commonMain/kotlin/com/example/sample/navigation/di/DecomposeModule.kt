@@ -1,6 +1,8 @@
 package com.example.sample.navigation.di
 
 import com.example.sample.navigation.AppRootComponent
+import com.example.sample.navigation.BoxGameComponent
+import com.example.sample.navigation.DefaultBoxGameComponent
 import com.example.sample.navigation.DefaultMyScreenComponent
 import com.example.sample.navigation.DefaultScreenBComponent
 import com.example.sample.navigation.DefaultUploadFileScreenComponent
@@ -30,15 +32,22 @@ class DecomposeModule {
     }
 
     @Single
+    fun provideBoxGameComponentFactory(): BoxGameComponent.Factory {
+        return DefaultBoxGameComponent.Factory()
+    }
+
+    @Single
     fun provideRootComponentFactory(
         myScreenComponentFactory: MyScreenComponent.Factory,
         screenBComponentFactory: ScreenBComponent.Factory,
-        uploadFileScreenComponentFactory: UploadFileScreenComponent.Factory
+        uploadFileScreenComponentFactory: UploadFileScreenComponent.Factory,
+        boxGameComponentFactory: BoxGameComponent.Factory
     ): RootComponent.Factory {
         return AppRootComponent.Factory(
             myScreenComponentFactory = myScreenComponentFactory,
             screenBComponentFactory = screenBComponentFactory,
-            uploadFileScreenComponentFactory = uploadFileScreenComponentFactory
+            uploadFileScreenComponentFactory = uploadFileScreenComponentFactory,
+            boxGameComponentFactory = boxGameComponentFactory
         )
     }
 }
