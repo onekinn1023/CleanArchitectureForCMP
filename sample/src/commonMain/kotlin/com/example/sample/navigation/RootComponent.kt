@@ -22,6 +22,10 @@ interface RootComponent {
         data class UploadFileScreen(
             val uploadFileScreenComponent: UploadFileScreenComponent
         ) : Child()
+
+        data class BoxGameScreen(
+            val boxGameComponent: BoxGameComponent
+        ): Child()
     }
 
     fun interface Factory {
@@ -33,7 +37,8 @@ class AppRootComponent(
     componentContext: ComponentContext,
     private val myScreenComponentFactory: MyScreenComponent.Factory,
     private val screenBComponentFactory: ScreenBComponent.Factory,
-    private val uploadFileScreenComponentFactory: UploadFileScreenComponent.Factory
+    private val uploadFileScreenComponentFactory: UploadFileScreenComponent.Factory,
+    private val boxGameComponentFactory: BoxGameComponent.Factory
 ) : RootComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Configuration>()
@@ -55,7 +60,8 @@ class AppRootComponent(
                 RootComponent.Child.MyScreen(
                     myScreenComponentFactory(
                         componentContext = componentContext,
-                        navigateClick = { navigation.push(Configuration.ScreenB(it)) }
+                        navigateClick = { navigation.push(Configuration.ScreenB(it)) },
+                        navigateToGame = { navigation.push(Configuration.BoxGame) }
                     )
                 )
             }
@@ -79,6 +85,15 @@ class AppRootComponent(
                     )
                 )
             }
+
+            Configuration.BoxGame -> {
+                RootComponent.Child.BoxGameScreen(
+                     boxGameComponentFactory(
+                         componentContext = componentContext,
+                         back = { navigation.pop() }
+                     )
+                )
+            }
         }
     }
 
@@ -89,14 +104,16 @@ class AppRootComponent(
     class Factory(
         private val myScreenComponentFactory: MyScreenComponent.Factory,
         private val screenBComponentFactory: ScreenBComponent.Factory,
-        private val uploadFileScreenComponentFactory: UploadFileScreenComponent.Factory
+        private val uploadFileScreenComponentFactory: UploadFileScreenComponent.Factory,
+        private val boxGameComponentFactory: BoxGameComponent.Factory
     ) : RootComponent.Factory {
         override fun invoke(componentContext: ComponentContext): RootComponent {
             return AppRootComponent(
                 componentContext,
                 myScreenComponentFactory,
                 screenBComponentFactory,
-                uploadFileScreenComponentFactory
+                uploadFileScreenComponentFactory,
+                boxGameComponentFactory
             )
         }
     }
@@ -113,5 +130,8 @@ class AppRootComponent(
 
         @Serializable
         data object UploadFileScreen : Configuration
+
+        @Serializable
+        data object BoxGame : Configuration
     }
 }

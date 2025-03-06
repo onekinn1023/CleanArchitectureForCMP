@@ -56,6 +56,12 @@ fun MyScreen(
                     )
                 )
             }
+
+            MyEvent.NavigateToBox -> {
+                myScreenComponent?.onAction(
+                    MyScreenComponent.MyScreenAction.NavigateBoxGame
+                )
+            }
         }
     }
 
@@ -124,10 +130,17 @@ fun DemoScreen(
                 ) {
                     Text(text = "Navigate to next screen B!")
                 }
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(
+                    onClick = {
+                        onAction(MyAction.ClickBoxGame)
+                    }
+                ) {
+                    Text(text = "Navigate to Box game!")
+                }
             }
         }
     }
-
 }
 
 @Composable

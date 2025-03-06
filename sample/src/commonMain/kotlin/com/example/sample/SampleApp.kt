@@ -17,6 +17,7 @@ import com.example.sample.presentation.FileUploadScreen
 import com.example.sample.presentation.MyScreen
 import com.example.sample.presentation.RequirePermissionScreen
 import com.example.sample.presentation.ScreenB
+import com.example.ui.BoxGameScreen
 import dev.icerock.moko.permissions.PermissionsController
 import dev.icerock.moko.permissions.compose.BindEffect
 import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
@@ -54,6 +55,13 @@ fun SampleApp(
                         FileUploadScreen(
                             modifier = Modifier,
                             uploadFileScreenComponent = child.uploadFileScreenComponent
+                        )
+                    }
+
+                    is RootComponent.Child.BoxGameScreen -> {
+                        BoxGameScreen(
+                            modifier = Modifier,
+                            onBack = { child.boxGameComponent.back() }
                         )
                     }
                 }

@@ -23,7 +23,7 @@ lifecycleViewModelCompose = "2.8.0"
 
 core-splashscreen = "1.0.1"
 
-ktor = "2.3.12"
+ktor = "3.0.0"
 
 datastore = "1.1.1"
 
@@ -35,7 +35,7 @@ decompose = "3.1.0"
 
 napier = "2.7.1"
 
-okio = "3.9.0"
+okio = "3.9.1"
 
 file-kit = "0.8.2"
 jetbrainsKotlinJvm = "1.9.22"

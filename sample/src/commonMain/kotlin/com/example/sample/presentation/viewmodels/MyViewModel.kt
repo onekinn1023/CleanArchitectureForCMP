@@ -62,6 +62,10 @@ class MyViewModel(
                     MyAction.ClickNavigateButton -> {
                         send(MyEvent.NavigateToB)
                     }
+
+                    MyAction.ClickBoxGame -> {
+                        send(MyEvent.NavigateToBox)
+                    }
                 }
             }
         }
@@ -119,6 +123,7 @@ data class MyState(
 sealed class MyEvent {
     data object FirstEvent : MyEvent()
     data object NavigateToB : MyEvent()
+    data object NavigateToBox : MyEvent()
 }
 
 sealed interface MyAction {
@@ -126,4 +131,5 @@ sealed interface MyAction {
     data class GetRemoteString(val text: String) : MyAction
     data object ChangeText : MyAction
     data object ClickNavigateButton : MyAction
+    data object ClickBoxGame: MyAction
 }
