@@ -21,11 +21,6 @@ class FileSystemDomainModule
 class FileSystemDataModule {
 
     @Single
-    fun provideFileHelper(): FileHelper {
-        return FileHelper.SYSTEM
-    }
-
-    @Single
     fun provideFileSystemRepository(
         dispatcherProvider: DispatcherProvider,
         fileHelper: FileHelper
@@ -38,5 +33,10 @@ class FileSystemDataModule {
 }
 
 
-@Module(includes = [FileSystemDataModule::class, FileSystemDomainModule::class, FileSystemViewModelModule::class])
+@Module(includes = [NativeModule::class, FileSystemDataModule::class, FileSystemDomainModule::class, FileSystemViewModelModule::class])
 class FileSystemModule
+
+@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
+@Module
+@ComponentScan("com.example.filesystem.utils")
+internal expect class NativeModule()
