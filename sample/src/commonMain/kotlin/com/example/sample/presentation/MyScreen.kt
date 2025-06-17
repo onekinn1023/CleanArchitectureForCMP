@@ -33,6 +33,7 @@ import com.example.sample.presentation.viewmodels.MyViewModel
 import com.example.ui.CustomSearchView
 import com.example.ui.OutlinedSearchView
 import com.example.ui.SimpleToolbar
+import com.example.ui.privacySensitive
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -100,6 +101,7 @@ fun DemoScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
+                modifier = Modifier.privacySensitive(),
                 text = state.initialText,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
