@@ -18,6 +18,7 @@ import com.example.sample.presentation.MyScreen
 import com.example.sample.presentation.RequirePermissionScreen
 import com.example.sample.presentation.ScreenB
 import com.example.ui.BoxGameScreen
+import com.example.ui.core.CMPTheme
 import dev.icerock.moko.permissions.PermissionsController
 import dev.icerock.moko.permissions.compose.BindEffect
 import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
@@ -30,7 +31,7 @@ import org.koin.compose.KoinContext
 fun SampleApp(
     rootComponent: RootComponent
 ) {
-    MaterialTheme {
+    CMPTheme {
         KoinContext {
             val childStack by rootComponent.stack.subscribeAsState()
             Children(
